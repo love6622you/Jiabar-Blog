@@ -13,11 +13,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen ">
         <Providers>
-          <header>header</header>
-          <main>{children}</main>
-          <footer>footer</footer>
+          <div className="mx-auto flex max-w-[1400px]">
+            <header className="sticky top-0 h-screen basis-40">
+              <div className="">header</div>
+            </header>
+
+            <main className="flex-1 border-l-2 border-r-2">{children}</main>
+
+            <footer className="sticky top-0 basis-60 h-screen">
+              <div>footer</div>
+            </footer>
+          </div>
         </Providers>
       </body>
     </html>

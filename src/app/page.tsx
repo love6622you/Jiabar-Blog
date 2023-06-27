@@ -1,7 +1,20 @@
-"use client";
-
-import { Box } from "@chakra-ui/layout";
-
 export default function Home() {
-  return <Box>home page</Box>;
+  const array = Array.from({ length: 100 }, () => []);
+  return (
+    <div>
+      {array.map((item, index) => {
+        return (
+          <>
+            <p key={index}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
+              repudiandae omnis tempore beatae a quis inventore aspernatur odio
+              mollitia cum totam provident suscipit, corrupti voluptatibus
+              laboriosam expedita asperiores ab dolor?
+            </p>
+            <br />
+          </>
+        );
+      })}
+    </div>
+  );
 }
