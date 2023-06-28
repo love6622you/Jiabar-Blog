@@ -1,5 +1,5 @@
 export default function Home() {
-  const array = Array.from({ length: 100 }, () => []);
+  const array = Array.from({ length: 10 }, () => []);
   return (
     <div>
       {array.map((item, index) => {

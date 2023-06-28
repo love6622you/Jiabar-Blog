@@ -1,5 +1,7 @@
 import "@/styles/globals.css";
 import { Providers } from "@/components/providers";
+import Header from "@/components/layout/Header";
+import Aside from "@/components/layout/Aside";
 
 export const metadata = {
   title: "Create Next App",
@@ -16,15 +18,9 @@ export default function RootLayout({
       <body className="min-h-screen ">
         <Providers>
           <div className="mx-auto flex max-w-[1400px]">
-            <header className="sticky top-0 h-screen basis-40">
-              <div className="">header</div>
-            </header>
-
+            <Header />
             <main className="flex-1 border-l-2 border-r-2">{children}</main>
-
-            <footer className="sticky top-0 basis-60 h-screen">
-              <div>footer</div>
-            </footer>
+            <Aside />
           </div>
         </Providers>
       </body>
