@@ -29,21 +29,21 @@ const navigation = [
 
 const Header = () => {
   return (
-    <header className="sticky top-0 h-screen basis-40">
-      <div className="ml-auto flex h-full w-20 flex-col items-center justify-between py-10">
+    <header className="sticky top-0 h-screen basis-24">
+      <div className="flex h-full flex-col items-center justify-between py-10">
         <div className="relative h-8 w-8">
           <Image alt="logo" src={"https://floatui.com/logo-letter.png"} fill />
         </div>
 
-        <nav className="flex flex-col gap-y-10">
+        <nav className="flex flex-col gap-y-5">
           {navigation.map((item, idx) => (
             <Link
               key={item.name}
               href={item.href}
-              className="group relative flex w-fit items-center justify-center rounded-full p-2 text-gray-700 hover:bg-gray-200"
+              className="group relative flex w-fit items-center justify-center rounded-full p-2 text-gray-500 hover:bg-gray-100"
             >
-              <div className="text-gray-700">{item.icon}</div>
-              <span className="absolute left-12 hidden whitespace-nowrap rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs text-gray-700 group-hover:inline-block">
+              <div className="text-gray-500">{item.icon}</div>
+              <span className="absolute left-14 hidden whitespace-nowrap rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs text-gray-500 group-hover:inline-block ">
                 {item.name}
               </span>
             </Link>
