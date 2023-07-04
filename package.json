@@ -9,9 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@remirror/pm": "^2.0.6",
-    "@remirror/react": "^2.0.29",
-    "@remirror/styles": "^2.0.5",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/node": "20.3.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
@@ -26,7 +24,9 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "react-markdown": "^8.0.7",
-    "remirror": "^2.0.32",
+    "rehype-katex": "^6.0.3",
+    "rehype-raw": "^6.1.1",
+    "remark-math": "^5.1.1",
     "tailwind-merge": "^1.13.2",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.3"

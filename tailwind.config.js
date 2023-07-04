@@ -6,7 +6,19 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
-    extend: {}
+    extend: {
+      typography: (theme) => ({
+        DEFAULT: {
+          css: [
+            {
+              "ul > li.task-list-item::before": {
+                content: "none"
+              }
+            }
+          ]
+        }
+      })
+    }
   },
-  plugins: []
+  plugins: [require("@tailwindcss/typography")]
 };
