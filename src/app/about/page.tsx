@@ -8,7 +8,9 @@ const about = () => {
         </div>
       </div>
 
-      <article></article>
+      <article>
+        <div className="mx-20 py-10">test</div>
+      </article>
     </section>
   );
 };
