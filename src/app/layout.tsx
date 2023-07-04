@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen overflow-y-scroll">
+      <body className="min-h-screen overflow-y-scroll bg-gray-100">
         <Providers>
           <div className="mx-auto flex max-w-[1400px]">
             <Header />

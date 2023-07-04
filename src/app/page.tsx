@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,15 +20,16 @@ export default function Home() {
           return (
             <article
               key={index}
-              className="group relative cursor-pointer transition hover:shadow-2xl"
+              className="group relative cursor-pointer transition hover:shadow-xl bg-white mb-4"
             >
               <Link
-                className="absolute inset-0"
+                className="absolute inset-0 z-0"
                 href={{
                   pathname: `/post/${index}`
                 }}
               />
-              <div className="mx-10 border-b py-10 hover:border-none">
+
+              <div className={cn("mx-10 py-10", ["pt-5"])}>
                 <div className="mb-4 flex items-center gap-x-2">
                   <Image
                     className="inline-block rounded-full "
@@ -48,6 +50,7 @@ export default function Home() {
                       src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
                       className="object-cover"
                       fill
+                      sizes="*"
                     />
                   </div>
 

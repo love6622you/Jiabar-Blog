@@ -18,6 +18,7 @@ const PostDetail = () => {
           }
           alt="pic"
           fill
+          sizes='*'
         />
       </div>
       <div className="mx-auto max-w-3xl px-10">
