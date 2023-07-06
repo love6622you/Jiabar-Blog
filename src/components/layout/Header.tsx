@@ -1,65 +1,97 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import Link from "next/link";
-import {
-  AiOutlineHome,
-  AiOutlineInfoCircle,
-  AiOutlineContacts,
-  AiOutlineUser
-} from "react-icons/ai";
+import Image from "next/image";
 
-const navigation = [
-  {
-    href: "/",
-    name: "Home",
-    icon: <AiOutlineHome className="h-6 w-6" />
-  },
-  {
-    href: "/about",
-    name: "About",
-    icon: <AiOutlineInfoCircle className="h-6 w-6" />
-  },
-  {
-    href: "/contact",
-    name: "Contact",
-    icon: <AiOutlineContacts className="h-6 w-6" />
-  }
-];
+import { cn } from "@/lib/utils";
+import { Input } from "../ui/input";
+import { useClickOutside } from "@/hook/useClickOutside";
+import { UserInfoDropdownMenu } from "../UserInfoDropdownMenu";
+import AuthModal from "../modal/AuthModal";
+import NewPostModal from "../modal/NewPostModal";
 
 const Header = () => {
+  const [hasToken, setHasToken] = useState(true);
+
+  const [isNarbarOpen, setIsNarbarOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  useClickOutside(() => setIsNarbarOpen(false), null, [headerRef.current]);
+
+  const navigation = [
+    { title: "Home", path: "/" },
+    { title: "About", path: "/about" },
+    { title: "Contact", path: "/contact" }
+  ];
+
   return (
-    <header className="sticky top-0 z-30 h-screen basis-24">
-      <div className="flex h-full flex-col items-center justify-between py-10">
-        <Link href={"/"} className="relative h-8 w-8">
-          <Image
-            alt="logo"
-            src={"https://floatui.com/logo-letter.png"}
-            fill
-            className="object-cover"
-            sizes="*"
-          />
-        </Link>
-
-        <nav className="flex flex-col gap-y-5">
-          {navigation.map((item, idx) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="group relative flex w-fit items-center justify-center rounded-full p-2 text-gray-500 hover:bg-gray-100"
-            >
-              <div className="text-gray-500">{item.icon}</div>
-              <span className="absolute left-14 hidden whitespace-nowrap rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs text-gray-500 group-hover:inline-block">
-                {item.name}
-              </span>
+    <header ref={headerRef} className="fixed z-50 w-full">
+      <nav className=" bg-white py-3 md:text-sm">
+        <div className="mx-auto max-w-[1400px] items-center gap-x-5 px-4 md:flex md:px-8">
+          <div className="flex items-center justify-between">
+            <Link href="/">
+              <Image
+                src="https://www.floatui.com/logo.svg"
+                width={120}
+                height={50}
+                alt="JB logo"
+              />
             </Link>
-          ))}
-        </nav>
 
-        <div className="p-2">
-          <AiOutlineUser className="h-6 w-6" />
+            <form className="ml-5 mr-auto flex items-center rounded-md border p-2.5">
+              <AiOutlineSearch className="h-5 w-5 text-gray-300" />
+              <Input
+                className=" h-5 w-[200px] border-none focus-visible:ring-0"
+                placeholder="Search..."
+              />
+            </form>
+
+            {/* mobile */}
+            <div className="md:hidden">
+              <button
+                className=" text-gray-500 hover:text-gray-800"
+                onClick={() => setIsNarbarOpen(!isNarbarOpen)}
+              >
+                {isNarbarOpen ? (
+                  <AiOutlineClose className="h-6 w-6" />
+                ) : (
+                  <AiOutlineMenu className="h-6 w-6" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div
+            className={cn(
+              "mt-8 md:mt-0 md:flex md:flex-1 md:items-center",
+              isNarbarOpen ? "block" : "hidden"
+            )}
+          >
+            <ul className="space-y-6 md:hidden">
+              {navigation.map((item, idx) => {
+                return (
+                  <li key={idx} className="text--700 hover:text-gray-900">
+                    <Link href={item.path}>{item.title}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="mt-6 flex-1 items-center justify-end gap-x-6 space-y-6 md:mt-0 md:flex md:space-y-0">
+              {hasToken ? (
+                <>
+                  <NewPostModal />
+                  <UserInfoDropdownMenu />
+                </>
+              ) : (
+                <AuthModal />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      </nav>
     </header>
   );
 };
