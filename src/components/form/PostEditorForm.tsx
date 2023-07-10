@@ -31,17 +31,17 @@ const PostEditorFormSchema = z.object({
   content: z.string({ required_error: "輸入文章內容" })
 });
 
-type ProfileFormValues = z.infer<typeof PostEditorFormSchema>;
+type PostEditorFormValues = z.infer<typeof PostEditorFormSchema>;
 
 // This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
+const defaultValues: Partial<PostEditorFormValues> = {
   title: "title",
   tagList: ["javascript", "web"],
   content: "content"
 };
 
 export function PostEditorForm() {
-  const form = useForm<ProfileFormValues>({
+  const form = useForm<PostEditorFormValues>({
     resolver: zodResolver(PostEditorFormSchema),
     defaultValues,
     mode: "onChange"
@@ -49,7 +49,7 @@ export function PostEditorForm() {
 
   const { handleSubmit, control, getValues } = form;
 
-  function onSubmit(data: ProfileFormValues) {
+  function onSubmit(data: PostEditorFormValues) {
     console.log(data);
     toast({
       title: "You submitted the following values:",

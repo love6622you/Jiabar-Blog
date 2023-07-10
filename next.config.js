@@ -4,7 +4,8 @@ const nextConfig = {
     domains: [
       "floatui.com",
       "images.unsplash.com",
-      "dev-to-uploads.s3.amazonaws.com"
+      "dev-to-uploads.s3.amazonaws.com",
+      "res.cloudinary.com"
     ]
   }
 };

@@ -50,7 +50,7 @@ const NewPostModal = () => {
       </DialogTrigger>
 
       <DialogContent
-        className="flex h-[100dvh] max-w-[100dvw] flex-col  bg-gray-50"
+        className="flex h-[100dvh] max-w-[100dvw] flex-col bg-gray-50"
         onOpenAutoFocus={() => {
           setState(ModalState.Edit);
         }}
@@ -72,7 +72,7 @@ const NewPostModal = () => {
           ))}
         </DialogDescription>
 
-        <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto bg-white px-16 py-10">
+        <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto bg-white px-16 py-10 rounded-2xl">
           {state === ModalState.Edit && <PostEditorForm />}
           {state === ModalState.Preview && <PostView />}
         </div>

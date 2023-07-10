@@ -5,13 +5,15 @@ import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import { Badge } from "../ui/badge";
+import { cn } from "@/lib/utils";
 
 const data = {
   image:
-    "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/avvhvhjxawzhq221cm0a.png",
+    "https://res.cloudinary.com/practicaldev/image/fetch/s--fsSLb3rv--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5vowuy74x652f9wphnea.png",
   title: "我是標題",
   tagList: ["Web", "Javascript", "Css", "Html"],
-  content: `- First we have imported the required packages
+  content: `### List
+  - First we have imported the required packages
   - Then we have defined the Type for our fields to use in our global store in Zustand.
   - Then we have to create the Zustand store and passed the initial values for states and setter functions for those states. We also exported this store to use in other components
   - Then we created a new instance of Apollo Client by passing 2 params URL of our graphql api and cache to set the cache value for our data. We then passed this client instance to the Apollo Provider client prop.
@@ -38,37 +40,44 @@ const data = {
   <https://dev.to/shubhamtiwari909/custom-tabs-with-sass-and-javascript-4dej>`
 };
 
-const PostView = () => {
+type PostViewType = {
+  className?: string;
+};
+
+const PostView = ({ className }: PostViewType) => {
   const [markdownSource, setMarkdownSource] = useState<string>(data.content);
 
   return (
-    <div className="space-y-10">
-      <div className="relative h-[300px] w-full ">
+    <>
+      <div className="mb-10 h-[350px]">
         <Image
-          className="object-contain"
+          className="h-full w-full rounded-t-2xl object-fill"
           src={data.image}
           alt="image"
-          fill
-          sizes="*"
+          width={1600}
+          height={900}
         />
       </div>
 
-      <div className="space-y-5">
-        <h1 className="text-4xl font-bold">{data.title}</h1>
-        {data.tagList.map((tag) => (
-          <Badge key={tag} variant={"secondary"} className="mr-4">
-            {tag}
-          </Badge>
-        ))}
+      <div className={cn("mx-auto max-w-3xl space-y-10", className)}>
+        <div className="space-y-5">
+          <h1 className="text-4xl font-bold">{data.title}</h1>
+          {data.tagList.map((tag) => (
+            <Badge key={tag} variant={"secondary"} className="mr-4">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+
+        <ReactMarkdown
+          className="prose max-w-none prose-a:text-blue-400 prose-img:rounded-xl"
+          rehypePlugins={[rehypeRaw, rehypeKatex]}
+          remarkPlugins={[remarkMath]}
+        >
+          {markdownSource}
+        </ReactMarkdown>
       </div>
-      <ReactMarkdown
-        className="prose prose-a:text-blue-400 prose-img:rounded-xl"
-        rehypePlugins={[rehypeRaw, rehypeKatex]}
-        remarkPlugins={[remarkMath]}
-      >
-        {markdownSource}
-      </ReactMarkdown>
-    </div>
+    </>
   );
 };
 

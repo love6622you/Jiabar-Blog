@@ -24,9 +24,9 @@ export default function RootLayout({
       <body className="min-h-screen overflow-y-scroll bg-gray-100 pt-[80px]">
         <Providers>
           <Header className="fixed inset-0 z-50 max-h-max w-full py-2 md:max-h-[80px]" />
-          <div className="mx-auto flex max-w-[1400px] ">
+          <div className="mx-auto flex max-w-[1400px] gap-x-5 py-10">
             <SideBar className={`${styles.barSticky} basis-24`} />
-            <main className="flex-1 border-l-2 border-r-2">{children}</main>
+            <main className="flex-1 rounded-2xl bg-white">{children}</main>
             <Aside className={`${styles.barSticky} basis-[22.5rem]`} />
           </div>
         </Providers>

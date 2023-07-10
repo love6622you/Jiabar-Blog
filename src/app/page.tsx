@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ export default function Home() {
           return (
             <article
               key={index}
-              className="group relative cursor-pointer transition hover:shadow-xl bg-white mb-4"
+              className="group relative mb-4 cursor-pointer bg-white transition hover:shadow-xl"
             >
               <Link
                 className="absolute inset-0 z-0"
@@ -38,9 +38,9 @@ export default function Home() {
                     width={48}
                     height={48}
                   />
-                  <p>Name</p>
-                  <span className="h-1 w-1 rounded-full bg-black" />
-                  <p>Nov 1, 2022</p>
+                  <p>
+                    {"Name"} | {"Nov 1, 2022"}
+                  </p>
                 </div>
 
                 <div className="flex">
