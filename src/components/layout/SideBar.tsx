@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import {
   AiOutlineHome,
@@ -27,20 +27,14 @@ const navigation = [
   }
 ];
 
-const SideBar = () => {
-  return (
-    <header className="sticky top-0 z-30 h-screen basis-24">
-      <div className="flex h-full flex-col items-center justify-between py-10">
-        <Link href={"/"} className="relative h-8 w-8">
-          <Image
-            alt="logo"
-            src={"https://floatui.com/logo-letter.png"}
-            fill
-            className="object-cover"
-            sizes="*"
-          />
-        </Link>
+type SideBarType = {
+  className?: string;
+};
 
+const SideBar = ({ className }: SideBarType) => {
+  return (
+    <nav className={cn("", className)}>
+      <div className="flex h-full flex-col items-center justify-center py-10">
         <nav className="flex flex-col gap-y-5">
           {navigation.map((item, idx) => (
             <Link
@@ -55,12 +49,8 @@ const SideBar = () => {
             </Link>
           ))}
         </nav>
-
-        <div className="p-2">
-          <AiOutlineUser className="h-6 w-6" />
-        </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

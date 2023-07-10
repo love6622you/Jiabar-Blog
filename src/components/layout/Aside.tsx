@@ -1,6 +1,11 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-const Aside = () => {
+type AsideType = {
+  className?: string;
+};
+
+const Aside = ({ className }: AsideType) => {
   const tags = [
     "Picture",
     "Fintech",
@@ -14,16 +19,19 @@ const Aside = () => {
   ];
   return (
     <aside
-      className="sticky top-0 grid h-screen basis-[22.5rem] grid-rows-[auto_minmax(auto,_1fr)_minmax(auto,_240px)] gap-y-10 overflow-y-scroll p-10 text-sm"
+      className={cn(
+        "grid grid-rows-[auto_minmax(auto,_1fr)_minmax(auto,_240px)] gap-y-10 overflow-y-scroll p-10 text-sm",
+        className
+      )}
       style={{ scrollbarGutter: "stable" }}
     >
-      <div>
+      <div> 
         <div className="relative aspect-square">
           <Image
             alt="avatar"
             src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             fill
-            sizes='*'
+            sizes="*"
           />
         </div>
 
