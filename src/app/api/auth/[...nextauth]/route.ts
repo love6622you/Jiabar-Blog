@@ -20,10 +20,10 @@ export const authOptions: NextAuthOptions = {
     })
     // ...add more providers here
   ],
-  // session: {
-  //   strategy: "jwt"
-  // },
-  // debug: process.env.NODE_ENV !== "production"
+  session: {
+    strategy: "jwt"
+  },
+  debug: process.env.NODE_ENV !== "production"
 };
 
 const handler = NextAuth(authOptions);

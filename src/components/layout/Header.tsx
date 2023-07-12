@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
@@ -17,7 +18,7 @@ type HeaderProps = {
 };
 
 const Header = ({ className }: HeaderProps) => {
-  const [hasToken, setHasToken] = useState(false);
+  const { status } = useSession();
 
   const [isNarbarOpen, setIsNarbarOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -84,7 +85,7 @@ const Header = ({ className }: HeaderProps) => {
           </ul>
 
           <div className="mt-6 flex-1 items-center justify-end gap-x-6 space-y-6 md:mt-0 md:flex md:space-y-0">
-            {hasToken ? (
+            {status === "authenticated" ? (
               <>
                 <NewPostModal />
                 <UserInfoDropdownMenu />

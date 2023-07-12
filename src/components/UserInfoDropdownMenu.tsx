@@ -1,3 +1,4 @@
+import { signOut, useSession } from "next-auth/react";
 import { LuLogOut, LuUser } from "react-icons/lu";
 
 import {
@@ -12,11 +13,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function UserInfoDropdownMenu() {
+  const { data } = useSession();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" alt="You" />
+          <AvatarImage src={data?.user?.image || ""} alt="You" />
           <AvatarFallback>You</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -35,7 +37,12 @@ export function UserInfoDropdownMenu() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => {
+            signOut();
+          }}
+        >
           <LuLogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
