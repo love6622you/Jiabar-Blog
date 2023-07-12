@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { signIn, signOut } from "next-auth/react";
+
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -15,7 +17,6 @@ import {
   AiOutlineGithub,
   AiOutlineGoogle
 } from "react-icons/ai";
-
 import { LucideLoader2 } from "lucide-react";
 
 const AuthModal = () => {
@@ -61,9 +62,9 @@ const AuthModal = () => {
                 variant={"outline"}
                 onClick={() => {
                   setIsLoading(true);
-                  // signIn(btn.key, {
-                  //   callbackUrl: searchParams?.get("from") || "/"
-                  // });
+                  signIn(btn.key, {
+                    callbackUrl: "/"
+                  });
                 }}
                 disabled={isLoading}
               >

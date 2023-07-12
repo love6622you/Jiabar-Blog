@@ -17,7 +17,7 @@ type HeaderProps = {
 };
 
 const Header = ({ className }: HeaderProps) => {
-  const [hasToken, setHasToken] = useState(true);
+  const [hasToken, setHasToken] = useState(false);
 
   const [isNarbarOpen, setIsNarbarOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
