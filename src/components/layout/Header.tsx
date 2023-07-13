@@ -47,7 +47,7 @@ const Header = ({ className }: HeaderProps) => {
           <form className="ml-5 mr-auto flex items-center rounded-md border p-2.5">
             <AiOutlineSearch className="h-5 w-5 text-gray-300" />
             <Input
-              className=" h-5 w-[200px] border-none focus-visible:ring-0"
+              className=" h-5 w-[200px] border-none focus-visible:ring-0 focus-visible:ring-offset-0 "
               placeholder="Search..."
             />
           </form>

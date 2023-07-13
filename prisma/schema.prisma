@@ -64,6 +64,7 @@ model Post {
   updatedAt  DateTime   @updatedAt
   title      String
   content    String
+  image      String
   published  Boolean    @default(false)
   user       User       @relation(fields: [userId], references: [id])
   userId     String
@@ -95,12 +96,12 @@ model Comment {
 
 model Category {
   id    String @id @default(cuid())
-  name  String
+  name  String @unique
   posts Post[] @relation("PostCategory")
 }
 
 model Tag {
   id    String @id @default(cuid())
-  name  String
+  name  String @unique
   posts Post[] @relation("PostTag")
 }

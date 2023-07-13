@@ -20,7 +20,7 @@ const Aside = ({ className }: AsideType) => {
   return (
     <aside
       className={cn(
-        "grid grid-rows-[auto_minmax(auto,_1fr)_minmax(auto,_240px)] gap-y-10 overflow-y-scroll bg-white p-10 text-sm rounded-2xl",
+        "grid grid-rows-[auto_minmax(auto,_1fr)_minmax(auto,_240px)] gap-y-10 overflow-y-scroll rounded-2xl bg-white p-10 text-sm",
         className
       )}
       style={{ scrollbarGutter: "stable" }}
