@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, getTimeAgo } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,6 +6,7 @@ type ArticleCardType = {
   post: any;
 };
 const ArticleCard = ({ post }: ArticleCardType) => {
+  const timeAgo = getTimeAgo(post.createdAt);
   return (
     <article
       key={post.id}
@@ -24,11 +25,11 @@ const ArticleCard = ({ post }: ArticleCardType) => {
             className="inline-block rounded-full "
             alt="avatar"
             src={post.user.image}
-            width={48}
-            height={48}
+            width={40}
+            height={40}
           />
           <p>
-            {post.user.name} | {post.createdAt}
+            {post.user.name} , {timeAgo}
           </p>
         </div>
 

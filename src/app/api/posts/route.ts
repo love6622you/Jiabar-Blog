@@ -3,11 +3,6 @@ import { checkSession } from "@/lib/session";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  const session = await checkSession();
-  if (session instanceof NextResponse) {
-    return session;
-  }
-
   try {
     const posts = await prisma.post.findMany({
       include: {
