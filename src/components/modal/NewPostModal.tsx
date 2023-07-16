@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -20,8 +20,9 @@ enum ModalState {
 }
 
 const NewPostModal = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const postEditorFormRef = useRef(null);
   const [state, setState] = useState<String>(ModalState.Edit);
+  const [open, setOpen] = useState(false);
 
   const stateButtons = [
     {
@@ -38,8 +39,17 @@ const NewPostModal = () => {
     }
   ];
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const getPostData = () => {
+    let data = postEditorFormRef.current?.["formData"] ?? {}
+    return data;
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
@@ -72,9 +82,11 @@ const NewPostModal = () => {
           ))}
         </DialogDescription>
 
-        <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto bg-white px-16 py-10 rounded-2xl">
-          {state === ModalState.Edit && <PostEditorForm />}
-          {state === ModalState.Preview && <PostView />}
+        <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto rounded-2xl bg-white px-16 py-10">
+          {state === ModalState.Edit && (
+            <PostEditorForm ref={postEditorFormRef} onClose={handleClose} />
+          )}
+          {state === ModalState.Preview && <PostView data={getPostData()}/>}
         </div>
       </DialogContent>
     </Dialog>

@@ -13,7 +13,7 @@ const allPosts = async () => {
 };
 
 export default function Home() {
-  const { data: posts, isLoading } = useQuery<[]>({
+  const { data: posts, isLoading } = useQuery({
     queryFn: allPosts,
     queryKey: ["posts"]
   });
@@ -34,10 +34,9 @@ export default function Home() {
       </div>
 
       <div className="mx-20 py-10">
-        {posts &&
-          posts.map((post: any, index) => {
-            return <ArticleCard post={post} key={post.id} />;
-          })}
+        {posts?.data?.map((post: any) => {
+          return <ArticleCard post={post} key={post.id} />;
+        })}
       </div>
     </section>
   );

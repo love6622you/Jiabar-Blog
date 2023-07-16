@@ -2,9 +2,10 @@ import prisma from "@/lib/db";
 import { checkSession } from "@/lib/session";
 import { NextResponse } from "next/server";
 
+let result = null;
 export async function GET(req: Request) {
   try {
-    const posts = await prisma.post.findMany({
+    let posts = await prisma.post.findMany({
       include: {
         user: true,
         hearts: true,
@@ -15,14 +16,26 @@ export async function GET(req: Request) {
         createdAt: "desc"
       }
     });
-    return NextResponse.json(posts, { status: 200 });
+
+    let data = await posts.map((post) => {
+      return {
+        ...post,
+        tags: post.tags.map((tag) => tag.name)
+      };
+    });
+
+    result = {
+      status: "success",
+      data
+    };
+
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: "Error has occurred while fetching posts"
-      },
-      { status: 403 }
-    );
+    result = {
+      status: "fail",
+      message: "Error has occurred while fetching posts"
+    };
+    return NextResponse.json(result, { status: 403 });
   }
 }
 
@@ -65,11 +78,16 @@ export async function POST(req: Request) {
         tags: true
       }
     });
-    return NextResponse.json(post);
+    result = {
+      status: "success",
+      data: post
+    };
+    return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.json(
-      { error: "Error has occurred while making a post" },
-      { status: 403 }
-    );
+    result = {
+      status: "fail",
+      message: "Error has occurred while making a post"
+    };
+    return NextResponse.json(result, { status: 403 });
   }
 }

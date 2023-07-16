@@ -63,11 +63,11 @@ model Post {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   title      String
-  content    String
-  image      String
+  content    String     @db.Text
+  image      String     @db.Text
   published  Boolean    @default(false)
-  user       User       @relation(fields: [userId], references: [id])
   userId     String
+  user       User       @relation(fields: [userId], references: [id])
   comments   Comment[]
   hearts     Heart[]
   categories Category[] @relation("PostCategory")

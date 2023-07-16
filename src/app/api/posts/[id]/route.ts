@@ -2,11 +2,11 @@ import prisma from "@/lib/db";
 import { checkSession } from "@/lib/session";
 import { NextResponse } from "next/server";
 
+let result = null;
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  let result = null;
   try {
     const id = params.id;
     const post = await prisma.post.findUnique({
@@ -21,7 +21,7 @@ export async function GET(
     if (post) {
       result = {
         status: "success",
-        data: post
+        data: { ...post, tags: post.tags.map((tag) => tag.name) }
       };
       return NextResponse.json(result, { status: 200 });
     } else {

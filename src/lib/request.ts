@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+
+export { AxiosError };
 
 /**
  * Axios 設定

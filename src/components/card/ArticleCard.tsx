@@ -61,10 +61,10 @@ const ArticleCard = ({ post }: ArticleCardType) => {
               {post.tags.map((tag: any) => {
                 return (
                   <span
-                    key={tag.name}
+                    key={tag}
                     className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700"
                   >
-                    {tag.name}
+                    {tag}
                   </span>
                 );
               })}
