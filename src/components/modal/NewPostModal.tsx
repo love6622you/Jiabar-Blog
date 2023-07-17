@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "../ui/dialog";
-import { PostEditorForm } from "../form/PostEditorForm";
+import PostEditorForm from "../form/PostEditorForm";
 import { cn } from "@/lib/utils";
 import PostView from "../post/PostReview";
 
@@ -20,7 +20,6 @@ enum ModalState {
 }
 
 const NewPostModal = () => {
-  const postEditorFormRef = useRef(null);
   const [state, setState] = useState<String>(ModalState.Edit);
   const [open, setOpen] = useState(false);
 
@@ -43,9 +42,10 @@ const NewPostModal = () => {
     setOpen(false);
   };
 
-  const getPostData = () => {
-    let data = postEditorFormRef.current?.["formData"] ?? {}
-    return data;
+  const getPostReviewData = () => {
+    const tempPostDataString = localStorage.getItem("tempPostData") ?? "";
+    let tempData = tempPostDataString && JSON.parse(tempPostDataString);
+    return tempData;
   };
 
   return (
@@ -84,9 +84,9 @@ const NewPostModal = () => {
 
         <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto rounded-2xl bg-white px-16 py-10">
           {state === ModalState.Edit && (
-            <PostEditorForm ref={postEditorFormRef} onClose={handleClose} />
+            <PostEditorForm onClose={handleClose} />
           )}
-          {state === ModalState.Preview && <PostView data={getPostData()}/>}
+          {state === ModalState.Preview && <PostView data={getPostReviewData()} />}
         </div>
       </DialogContent>
     </Dialog>

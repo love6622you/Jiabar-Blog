@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -47,13 +44,13 @@ type PostViewType = {
   data?: any;
 };
 
-const PostView = ({ className, data }: PostViewType) => {
+const PostView = ({ className, data = {} }: PostViewType) => {
   return (
     <>
       {data?.image && (
         <div className="h-[400px]">
           <Image
-            className="object-scale-down h-full w-full rounded-t-2xl"
+            className="h-full w-full rounded-t-2xl object-scale-down"
             src={data.image}
             alt="image"
             width={1600}

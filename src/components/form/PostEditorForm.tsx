@@ -54,169 +54,163 @@ const getDefaultValues = () => {
   return defaultValues;
 };
 
-export const PostEditorForm = forwardRef(
-  ({ onClose }: PostEditorFormType, ref) => {
-    useImperativeHandle(ref, () => ({
-      formData: getValues()
-    }));
+export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
+  const queryClient = useQueryClient();
 
-    const queryClient = useQueryClient();
-
-    // UseMutation
-    const { mutate: addPost, isLoading } = useMutation(
-      async (data: object) => {
-        await request({
-          url: "/posts",
-          method: "POST",
-          data
-        });
-      },
-      {
-        onError: (error) => {
-          if (error instanceof AxiosError) {
-            toast({
-              title: error?.response?.data?.message
-            });
-          }
-        },
-        onSuccess(data) {
-          queryClient.invalidateQueries(["posts"]);
+  // UseMutation
+  const { mutate: addPost, isLoading } = useMutation(
+    async (data: object) => {
+      await request({
+        url: "/posts",
+        method: "POST",
+        data
+      });
+    },
+    {
+      onError: (error) => {
+        if (error instanceof AxiosError) {
           toast({
-            title: "Success"
+            title: error?.response?.data?.message
           });
-          onClose();
-          localStorage.removeItem("tempPostData");
-          localStorage.removeItem("formBase64Info");
         }
+      },
+      onSuccess(data) {
+        queryClient.invalidateQueries(["posts"]);
+        toast({
+          title: "Success"
+        });
+        onClose();
+        localStorage.removeItem("tempPostData");
+        localStorage.removeItem("formBase64Info");
       }
-    );
+    }
+  );
 
-    // About form & form action
-    const form = useForm<PostEditorFormValues>({
-      resolver: zodResolver(PostFormSchema),
-      defaultValues: getDefaultValues(),
-      mode: "onChange"
-    });
+  // About form & form action
+  const form = useForm<PostEditorFormValues>({
+    resolver: zodResolver(PostFormSchema),
+    defaultValues: getDefaultValues(),
+    mode: "onChange"
+  });
 
-    const { handleSubmit, control, getValues } = form;
+  const { handleSubmit, control, getValues } = form;
 
-    const onSubmit = async (data: PostEditorFormValues) => {
-      const image = await convertFileToBase64(data.image);
-      await addPost({ ...data, image, category: "Movie" });
-    };
+  const onSubmit = async (data: PostEditorFormValues) => {
+    const image = await convertFileToBase64(data.image);
+    await addPost({ ...data, image, category: "Movie" });
+  };
 
-    // Other functions
-    const tempFormDataToLocalStorage = async () => {
-      let data = getValues();
-      const file = data.image;
-      let base64Info = null;
+  // Other functions
+  const tempFormDataToLocalStorage = async () => {
+    let data = getValues();
+    const file = data.image;
+    let base64Info = null;
 
-      if (file) {
-        // 1. Temp base64 info
-        base64Info = await convertFileToBase64(file);
-        localStorage.setItem(
-          "formBase64Info",
-          JSON.stringify({
-            fileData: base64Info,
-            fileName: file.name,
-            fileType: file.type
-          })
-        );
-      }
-
-      // 2. Save data to storage
+    if (file) {
+      // 1. Temp base64 info
+      base64Info = await convertFileToBase64(file);
       localStorage.setItem(
-        "tempPostData",
-        JSON.stringify({ ...data, image: base64Info })
+        "formBase64Info",
+        JSON.stringify({
+          fileData: base64Info,
+          fileName: file.name,
+          fileType: file.type
+        })
       );
-    };
+    }
 
-    return (
-      <Form {...form}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          onChange={() => {
-            tempFormDataToLocalStorage();
-          }}
-          className="h-full space-y-4"
-        >
-          <FormField
-            control={control}
-            name="image"
-            render={({ field: { value, name, onChange, ...field } }) => (
-              <FormItem>
-                <FormLabel>文章封面圖</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className="text-transparent file:text-transparent before:text-gray-700 before:content-[attr(data-name)]"
-                    data-name={getValues().image?.name ?? "請上傳檔案"}
-                    type="file"
-                    placeholder="請上傳檔案"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      if (event.target && event.target.files) {
-                        onChange(event.target.files[0]);
-                        tempFormDataToLocalStorage();
-                      }
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>標題</FormLabel>
-                <FormControl>
-                  <Input placeholder="文章標題" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="tags"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>標籤</FormLabel>
-                <FormControl>
-                  <Input placeholder="文章內容" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="content"
-            render={({ field }) => (
-              <FormItem className="h-3/5">
-                <FormLabel>內容</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="文章內容"
-                    className="h-[calc(100%_-_50px)] resize-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="text-center">
-            <Button type="submit" disabled={isLoading}>
-              Create Post
-            </Button>
-          </div>
-        </form>
-      </Form>
+    // 2. Save data to storage
+    localStorage.setItem(
+      "tempPostData",
+      JSON.stringify({ ...data, image: base64Info })
     );
-  }
-);
-PostEditorForm.displayName = "PostEditorForm";
+  };
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onChange={() => {
+          tempFormDataToLocalStorage();
+        }}
+        className="h-full space-y-4"
+      >
+        <FormField
+          control={control}
+          name="image"
+          render={({ field: { value, name, onChange, ...field } }) => (
+            <FormItem>
+              <FormLabel>文章封面圖</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="text-transparent file:text-transparent before:text-gray-700 before:content-[attr(data-name)]"
+                  data-name={getValues().image?.name ?? "請上傳檔案"}
+                  type="file"
+                  placeholder="請上傳檔案"
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    if (event.target && event.target.files) {
+                      onChange(event.target.files[0]);
+                      tempFormDataToLocalStorage();
+                    }
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>標題</FormLabel>
+              <FormControl>
+                <Input placeholder="文章標題" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>標籤</FormLabel>
+              <FormControl>
+                <Input placeholder="文章內容" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="content"
+          render={({ field }) => (
+            <FormItem className="h-3/5">
+              <FormLabel>內容</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="文章內容"
+                  className="h-[calc(100%_-_50px)] resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="text-center">
+          <Button type="submit" disabled={isLoading}>
+            Create Post
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+};
+export default PostEditorForm;
