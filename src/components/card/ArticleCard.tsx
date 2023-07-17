@@ -22,7 +22,7 @@ const ArticleCard = ({ post }: ArticleCardType) => {
       <div className={cn("mx-10 py-10", ["pt-5"])}>
         <div className="mb-4 flex items-center gap-x-2">
           <Image
-            className="inline-block rounded-full "
+            className="inline-block h-10 w-10 rounded-full"
             alt="avatar"
             src={post.user.image}
             width={40}

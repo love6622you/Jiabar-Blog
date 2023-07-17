@@ -1,8 +1,13 @@
+"use client";
+
+import { LuLoader2 } from "react-icons/lu";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,34 +16,60 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-
-const MAX_TEXT_COUNT = 300;
-
-const CommentFormSchema = z.object({
-  content: z.string({ required_error: "請輸入內容" }).max(MAX_TEXT_COUNT)
-});
+import { CommentFormSchema } from "@/lib/validation-schema";
+import { MAX_INPUT_LIMIT } from "@/constant/Input";
+import request, { AxiosError } from "@/lib/request";
+import { toast } from "../ui/use-toast";
+import { cn } from "@/lib/utils";
 
 type CommentFormValues = z.infer<typeof CommentFormSchema>;
 
 // This can come from your database or API.
-const defaultValues: Partial<CommentFormValues> = {
-  //   content: ""
-};
+const defaultValues: Partial<CommentFormValues> = {};
 
 export function CommentForm() {
+  const { slug: postId } = useParams();
+
+  const queryClient = useQueryClient();
+  // Mutation
+  const { mutate: addComment, isLoading } = useMutation(
+    async (data: { id: string; content: string }) => {
+      await request({
+        url: `/posts/${postId}/addComment`,
+        method: "POST",
+        data
+      });
+    },
+    {
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          toast({
+            title: error?.response?.data?.message
+          });
+        }
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries(["comments", postId]);
+        toast({
+          title: "Success"
+        });
+        await reset({ content: "" });
+      }
+    }
+  );
+
+  // Form
   const form = useForm<CommentFormValues>({
     resolver: zodResolver(CommentFormSchema),
     defaultValues,
     mode: "onChange"
   });
-
-  const { handleSubmit, control, watch } = form;
-
+  const { handleSubmit, control, watch, reset } = form;
   const currentLength = watch().content?.length || 0;
 
-  function onSubmit(data: CommentFormValues) {
-    console.log(data);
-  }
+  const onSubmit = async (data: CommentFormValues) => {
+    await addComment({ ...data, id: postId });
+  };
 
   return (
     <Form {...form}>
@@ -53,11 +84,11 @@ export function CommentForm() {
                   <Textarea
                     placeholder="留下您的評論"
                     className="resize-none"
-                    maxLength={MAX_TEXT_COUNT}
+                    maxLength={MAX_INPUT_LIMIT}
                     {...field}
                   />
-                  <p className='text-right text-gray-700'>
-                    {currentLength}/{MAX_TEXT_COUNT}
+                  <p className="text-right text-gray-700">
+                    {currentLength}/{MAX_INPUT_LIMIT}
                   </p>
                 </>
               </FormControl>
@@ -66,7 +97,13 @@ export function CommentForm() {
           )}
         />
         <div className="text-right">
-          <Button type="submit" variant={"outline"} className="px-6">
+          <Button
+            type="submit"
+            variant={"outline"}
+            className={cn("px-6")}
+            disabled={isLoading}
+          >
+            {isLoading && <LuLoader2 className="mr-2.5 h-4 w-4 animate-spin" />}
             送出
           </Button>
         </div>

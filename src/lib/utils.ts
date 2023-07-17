@@ -10,9 +10,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // n days ago / n hours ago
-export function getTimeAgo(timeStamp: string) {
+export function getTimeAgo(dateTime: Date) {
   const current = dayjs();
-  const previous = dayjs(timeStamp);
+  const previous = dayjs(dateTime);
 
   const timeAgo = previous.from(current);
   return timeAgo;

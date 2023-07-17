@@ -9,50 +9,65 @@ import { BiMessage } from "react-icons/bi";
 
 import Image from "next/image";
 import { CommentForm } from "../form/CommentForm";
+import { UseQueryResult } from "@tanstack/react-query";
+import { getTimeAgo } from "@/lib/utils";
 
-export function PostComment() {
+type CommentDataType = {
+  id: string;
+  content: string;
+  createdAt: Date;
+  user: {
+    name: string;
+    image: string;
+  };
+};
+
+type PostCommentType = {
+  source: UseQueryResult<CommentDataType[]>;
+};
+
+export function PostComment({ source }: PostCommentType) {
+  const { data: comments, isLoading } = source;
+  const length = comments?.length ?? 0;
   return (
     <Sheet>
       <SheetTrigger asChild>
         <div className="group cursor-pointer">
           <BiMessage className="inline-block h-6 w-8 group-hover:text-orange-400" />
-          <span>10 Comments</span>
+          <span>{length} Comments</span>
         </div>
       </SheetTrigger>
 
       <SheetContent className="overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>Comments (10)</SheetTitle>
+          <SheetTitle>Comments ({length})</SheetTitle>
         </SheetHeader>
 
         <CommentForm />
         <hr className="mt-8" />
         <ul className="divide-y">
-          {Array.from({ length: 10 }).map((comment, index) => {
-            return (
-              <li key={index} className="py-6">
-                <div className="mb-4 flex gap-x-2.5">
+          {isLoading && <div>isLoading...</div>}
+          {!isLoading &&
+            comments?.map((comment: CommentDataType) => (
+              <li key={comment.id} className="py-6">
+                <div className="mb-4 flex items-center gap-x-2.5">
                   <Image
-                    className="rounded-full"
+                    className="h-10 w-10 rounded-full"
                     alt="avatar"
-                    src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    width={48}
-                    height={48}
+                    src={comment.user.image}
+                    width={40}
+                    height={40}
                   />
                   <div className="space-y-0.5">
-                    <p>{"Name"}</p>
-                    <p className="text-gray-400"> {"5 days ago"}</p>
+                    <p>{comment.user.name}</p>
+                    <p className="text-gray-400">
+                      {getTimeAgo(comment?.createdAt)}
+                    </p>
                   </div>
                 </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde
-                  asperiores mollitia voluptas repudiandae animi, ex non natus
-                  eum provident est iste eius ratione ipsam ipsa facilis
-                  deserunt in nam ad!
-                </p>
+                <p>{comment?.content}</p>
               </li>
-            );
-          })}
+            ))}
         </ul>
       </SheetContent>
     </Sheet>

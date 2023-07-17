@@ -11,10 +11,11 @@ export async function getCurrentUserForServer() {
 export async function checkSession() {
   const session = await getCurrentUserForServer();
   if (!session) {
-    return NextResponse.json(
-      { error: "Unauthorized. Please login" },
-      { status: 401 }
-    );
+    const result = {
+      status: "fail",
+      message: "Unauthorized. Please login"
+    };
+    return NextResponse.json(result, { status: 401 });
   }
   return session;
 }

@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { FILE_ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/constant/Input";
+import {
+  FILE_ACCEPTED_IMAGE_TYPES,
+  MAX_FILE_SIZE,
+  MAX_INPUT_LIMIT
+} from "@/constant/Input";
 
 // For creating new post
 export const PostFormSchema = z.object({
@@ -12,4 +16,9 @@ export const PostFormSchema = z.object({
   title: z.string({ required_error: "輸入文章標題" }),
   tags: z.array(z.string().max(10, "最多 10 個字元")),
   content: z.string({ required_error: "輸入文章內容" })
+});
+
+// For creating comment
+export const CommentFormSchema = z.object({
+  content: z.string({ required_error: "請輸入內容" }).max(MAX_INPUT_LIMIT)
 });
