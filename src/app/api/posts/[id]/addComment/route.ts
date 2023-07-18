@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     return session;
   }
 
-  const { content, id } = await req.json();
+  const { content, postId } = await req.json();
 
   // 未輸入資料
   if (!content.length) {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   });
 
   const post = await prisma.post.findUnique({
-    where: { id }
+    where: { id: postId }
   });
 
   try {
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
         title: post?.title,
         content,
         userId: prismaUser?.id!,
-        postId: post?.id!
+        postId: postId
       }
     });
     result = {

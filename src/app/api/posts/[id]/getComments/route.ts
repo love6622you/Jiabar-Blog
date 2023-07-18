@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 let result = null;
 export async function GET(
   req: Request,
-  { params }: { params: { postId: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const postId = params.postId;
+    const postId = params.id;
     const comments = await prisma.comment.findMany({
       where: {
         postId

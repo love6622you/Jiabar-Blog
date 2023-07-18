@@ -33,7 +33,7 @@ export function CommentForm() {
   const queryClient = useQueryClient();
   // Mutation
   const { mutate: addComment, isLoading } = useMutation(
-    async (data: { id: string; content: string }) => {
+    async (data: { postId: string; content: string }) => {
       await request({
         url: `/posts/${postId}/addComment`,
         method: "POST",
@@ -68,7 +68,7 @@ export function CommentForm() {
   const currentLength = watch().content?.length || 0;
 
   const onSubmit = async (data: CommentFormValues) => {
-    await addComment({ ...data, id: postId });
+    await addComment({ ...data, postId });
   };
 
   return (

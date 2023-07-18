@@ -7,8 +7,6 @@ import { SessionProvider } from "next-auth/react";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 5000,
-      staleTime: 5000,
       refetchOnWindowFocus: false
     }
   }
