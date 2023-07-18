@@ -25,27 +25,31 @@ const getComments = async (postId: string) => {
 };
 
 const PostDetail = () => {
-  const slug = useParams()["slug"];
-  const [post, comments] = useQueries({
+  const postId = useParams()["slug"];
+
+  const [
+    { data: postData, isLoading: postIsLoading },
+    { data: commentsData, isLoading: commentsIsLoading }
+  ] = useQueries({
     queries: [
-      { queryKey: ["post", slug], queryFn: () => getPost(slug) },
-      { queryKey: ["comments", slug], queryFn: () => getComments(slug) }
+      { queryKey: ["posts", postId], queryFn: () => getPost(postId) },
+      { queryKey: ["comments", postId], queryFn: () => getComments(postId) }
     ]
   });
 
-  if (post.isLoading) {
+  if (postIsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (!post.data.data) {
+  if (!postData?.data) {
     return <div>Not found post</div>;
   }
   return (
     <section>
-      <PostView data={post.data.data} />
+      <PostView data={postData?.data} />
       <div className="mx-auto flex max-w-3xl gap-x-5 py-16">
-        <PostLike />
-        <PostComment source={comments.data} />
+        <PostLike postId={postId} count={postData?.data.hearts_count} />
+        {!commentsIsLoading && <PostComment data={commentsData?.data} />}
       </div>
     </section>
   );

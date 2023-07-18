@@ -82,7 +82,7 @@ export async function POST(req: Request) {
       status: "success",
       data: post
     };
-    return NextResponse.json(result);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     result = {
       status: "fail",

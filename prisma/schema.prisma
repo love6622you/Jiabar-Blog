@@ -59,19 +59,20 @@ model VerificationToken {
 }
 
 model Post {
-  id         String     @id @default(cuid())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  title      String
-  content    String     @db.Text
-  image      String     @db.Text
-  published  Boolean    @default(false)
-  userId     String
-  user       User       @relation(fields: [userId], references: [id])
-  comments   Comment[]
-  hearts     Heart[]
-  categories Category[] @relation("PostCategory")
-  tags       Tag[]      @relation("PostTag")
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  title       String
+  content     String     @db.Text
+  image       String     @db.Text
+  published   Boolean    @default(false)
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  comments    Comment[]
+  hearts_count Int        @default(0)
+  hearts      Heart[]
+  categories  Category[] @relation("PostCategory")
+  tags        Tag[]      @relation("PostTag")
 }
 
 model Heart {
