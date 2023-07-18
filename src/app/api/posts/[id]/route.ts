@@ -1,10 +1,9 @@
 import prisma from "@/lib/db";
-import { checkSession } from "@/lib/session";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 let result = null;
 export async function GET(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

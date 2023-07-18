@@ -1,8 +1,8 @@
 import prisma from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 let result = null;
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     let tags = await prisma.tag.findMany();
 

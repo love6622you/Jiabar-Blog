@@ -1,10 +1,10 @@
 import prisma from "@/lib/db";
 import { checkSession } from "@/lib/session";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 let result = null;
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const session = await checkSession();
   if (session instanceof NextResponse) {
     return session;
