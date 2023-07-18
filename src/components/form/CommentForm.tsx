@@ -50,9 +50,6 @@ export function CommentForm() {
       },
       onSuccess: async () => {
         queryClient.invalidateQueries(["comments", postId]);
-        toast({
-          title: "Success"
-        });
         await reset({ content: "" });
       }
     }
