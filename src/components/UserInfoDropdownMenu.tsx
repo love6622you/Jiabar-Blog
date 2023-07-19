@@ -18,8 +18,8 @@ export function UserInfoDropdownMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src={data?.user?.image || ""} alt="You" />
-          <AvatarFallback>You</AvatarFallback>
+          <AvatarImage src={data?.user?.image || ""} alt={"You"} />
+          <AvatarFallback>{data?.user?.name?.slice(0, 1)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
 

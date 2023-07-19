@@ -1,11 +1,18 @@
 import prisma from "@/lib/db";
 import { checkSession } from "@/lib/session";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 let result = null;
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
+
+  const searchText = searchParams.get("query") ?? "";
+
   try {
     let posts = await prisma.post.findMany({
+      where: {
+        OR: [{ title: { contains: searchText || "", mode: "insensitive" } }]
+      },
       include: {
         user: true,
         hearts: true,
@@ -39,7 +46,7 @@ export async function GET(req: Request) {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const session = await checkSession();
   if (session instanceof NextResponse) {
     return session;

@@ -2,10 +2,10 @@ import { cn, getTimeAgo } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-type ArticleCardType = {
+type PostCardType = {
   post: any;
 };
-const ArticleCard = ({ post }: ArticleCardType) => {
+const PostCard = ({ post }: PostCardType) => {
   const timeAgo = getTimeAgo(post.createdAt);
   return (
     <article
@@ -76,4 +76,4 @@ const ArticleCard = ({ post }: ArticleCardType) => {
   );
 };
 
-export default ArticleCard;
+export default PostCard;

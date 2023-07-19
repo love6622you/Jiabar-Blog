@@ -1,34 +1,42 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
-import { Input } from "../ui/input";
 import { useClickOutside } from "@/hook/useClickOutside";
 import { UserInfoDropdownMenu } from "../UserInfoDropdownMenu";
 import AuthModal from "../modal/AuthModal";
 import NewPostModal from "../modal/NewPostModal";
+import { useRouter } from "next/navigation";
+import SearchBar from "../search/SearchBar";
 
 type HeaderProps = {
   className?: string;
 };
 
+const navigation = [
+  { title: "Home", path: "/" },
+  { title: "About", path: "/about" },
+  { title: "Contact", path: "/contact" }
+];
+
 const Header = ({ className }: HeaderProps) => {
+  const headerRef = useRef<HTMLElement>(null);
   const { status } = useSession();
+  const router = useRouter();
 
   const [isNarbarOpen, setIsNarbarOpen] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
-  useClickOutside(() => setIsNarbarOpen(false), null, [headerRef.current]);
 
-  const navigation = [
-    { title: "Home", path: "/" },
-    { title: "About", path: "/about" },
-    { title: "Contact", path: "/contact" }
-  ];
+  const handleSearch = (searchText: string) => {
+    router.push(`/search?query=${searchText}`);
+  };
+
+  // Todo: optimize
+  useClickOutside(() => setIsNarbarOpen(false), undefined, [headerRef.current]);
 
   return (
     <header ref={headerRef} className={cn("bg-white md:text-sm", className)}>
@@ -44,13 +52,7 @@ const Header = ({ className }: HeaderProps) => {
             />
           </Link>
 
-          <form className="ml-5 mr-auto flex items-center rounded-md border p-2.5">
-            <AiOutlineSearch className="h-5 w-5 text-gray-300" />
-            <Input
-              className=" h-5 w-[200px] border-none focus-visible:ring-0 focus-visible:ring-offset-0 "
-              placeholder="Search..."
-            />
-          </form>
+          <SearchBar onSearch={handleSearch} />
 
           {/* mobile */}
           <div className="md:hidden">
