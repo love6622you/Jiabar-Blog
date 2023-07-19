@@ -38,7 +38,7 @@ const RecommendedTags = () => {
       {tags?.data.map((tag: TagType) => {
         return (
           <li
-            className="cursor-pointer rounded-3xl bg-gray-200/60 px-4 py-1.5"
+            className="cursor-pointer rounded-3xl bg-gray-200/60 px-4 py-1.5 hover:bg-purple-200 hover:text-white"
             key={tag.id}
             onClick={() => handleClick(tag.name)}
           >

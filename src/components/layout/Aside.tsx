@@ -1,12 +1,27 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import RecommendedTags from "../RecommendedTags";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type AsideType = {
   className?: string;
 };
 
 const Aside = ({ className }: AsideType) => {
+  const pathname = usePathname();
+  const [isPostPage, setIsPostPage] = useState(false);
+
+  useEffect(() => {
+    if (/^\/post\/[^/]+$/.test(pathname)) {
+      setIsPostPage(true);
+    } else {
+      setIsPostPage(false);
+    }
+  }, [pathname]);
+
   return (
     <aside
       className={cn(
@@ -15,7 +30,7 @@ const Aside = ({ className }: AsideType) => {
       )}
       style={{ scrollbarGutter: "stable" }}
     >
-      <div>
+      <div className={cn(!isPostPage && "hidden")}>
         <div className="relative aspect-square">
           <Image
             alt="avatar"
@@ -33,12 +48,12 @@ const Aside = ({ className }: AsideType) => {
           </a>
         </div>
       </div>
-
+      
       <div>
         <h4 className="mb-3.5 font-bold">Recommended Topics</h4>
         <RecommendedTags />
       </div>
-
+      
       <div className="row-start-3">
         <h4 className="mb-3.5 font-bold">Subscribe</h4>
         {Array.from({ length: 1 }, (_, index) => () => []).map((_, index) => {

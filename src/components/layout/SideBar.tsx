@@ -5,8 +5,7 @@ import Link from "next/link";
 import {
   AiOutlineHome,
   AiOutlineInfoCircle,
-  AiOutlineContacts,
-  AiOutlineUser
+  AiOutlineContacts
 } from "react-icons/ai";
 
 const navigation = [
@@ -40,10 +39,12 @@ const SideBar = ({ className }: SideBarType) => {
             <Link
               key={item.name}
               href={item.href}
-              className="group relative flex w-fit items-center justify-center rounded-full p-2 text-gray-500 hover:bg-gray-100"
+              className="group relative flex w-fit items-center justify-center rounded-full p-2 text-gray-500 hover:bg-purple-200"
             >
-              <div className="text-gray-500">{item.icon}</div>
-              <span className="absolute left-14 hidden whitespace-nowrap rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs text-gray-500 group-hover:inline-block">
+              <div className="text-gray-500 group-hover:text-gray-100">
+                {item.icon}
+              </div>
+              <span className="absolute left-14 hidden whitespace-nowrap rounded-lg bg-purple-200 px-2.5 py-1.5 text-xs font-bold text-white group-hover:inline-block">
                 {item.name}
               </span>
             </Link>
