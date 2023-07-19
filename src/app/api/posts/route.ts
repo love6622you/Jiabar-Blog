@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         OR: [{ title: { contains: searchText || "", mode: "insensitive" } }]
       },
       include: {
-        user: true,
+        author: true,
         hearts: true,
         comments: true,
         tags: true
@@ -64,10 +64,10 @@ export async function POST(req: NextRequest) {
         content,
         image,
         published: true,
-        user: {
+        author: {
           connect: { id: prismaUser?.id ?? "cljzcsn1t0007u2lu1yg5ukjo" }
         },
-        categories: {
+        category: {
           connectOrCreate: {
             where: { name: category },
             create: { name: category }
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
         }
       },
       include: {
-        categories: true,
+        category: true,
         tags: true
       }
     });

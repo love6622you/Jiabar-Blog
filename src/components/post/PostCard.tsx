@@ -24,12 +24,12 @@ const PostCard = ({ post }: PostCardType) => {
           <Image
             className="inline-block h-10 w-10 rounded-full"
             alt="avatar"
-            src={post.user.image}
+            src={post.author.image}
             width={40}
             height={40}
           />
           <p>
-            {post.user.name} , {timeAgo}
+            {post.author.name} , {timeAgo}
           </p>
         </div>
 

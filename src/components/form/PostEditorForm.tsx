@@ -74,7 +74,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
           });
         }
       },
-      onSuccess(data) {
+      onSuccess() {
         queryClient.invalidateQueries(["posts"]);
         toast({
           title: "Success"
@@ -122,7 +122,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
     // 2. Save data to storage
     localStorage.setItem(
       "tempPostData",
-      JSON.stringify({ ...data, image: base64Info })
+      JSON.stringify({ ...data, image: base64Info, published: false })
     );
   };
 

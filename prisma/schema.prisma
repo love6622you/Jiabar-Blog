@@ -59,28 +59,29 @@ model VerificationToken {
 }
 
 model Post {
-  id          String     @id @default(cuid())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  title       String
-  content     String     @db.Text
-  image       String     @db.Text
-  published   Boolean    @default(false)
-  userId      String
-  user        User       @relation(fields: [userId], references: [id])
-  comments    Comment[]
-  hearts_count Int        @default(0)
-  hearts      Heart[]
-  categories  Category[] @relation("PostCategory")
-  tags        Tag[]      @relation("PostTag")
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  title        String
+  content      String    @db.Text
+  image        String    @db.Text
+  published    Boolean   @default(false)
+  authorId     String
+  author       User      @relation(fields: [authorId], references: [id])
+  categoryId   String
+  category     Category  @relation("PostCategory", fields: [categoryId], references: [id])
+  comments     Comment[]
+  hearts_count Int       @default(0)
+  hearts       Heart[]
+  tags         Tag[]     @relation("PostTag")
 }
 
 model Heart {
   id     String @id @default(cuid())
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -89,10 +90,10 @@ model Comment {
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
-  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Category {
