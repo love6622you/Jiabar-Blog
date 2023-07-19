@@ -12,8 +12,21 @@ export async function GET(
       where: {
         id
       },
-      include: {
-        tags: true
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        image: true,
+        published: true,
+        author: {
+          select: {
+            name: true,
+            image: true
+          }
+        },
+        hearts_count: true,
+        tags: true,
+        createdAt: true
       }
     });
 

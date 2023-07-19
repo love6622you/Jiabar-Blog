@@ -4,7 +4,9 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
 import { Badge } from "../ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, getTimeAgo } from "@/lib/utils";
+import dayjs from "dayjs";
+import { dateTimeFormatter } from "@/constant/Formatter";
 
 const fakeData = {
   image:
@@ -45,6 +47,10 @@ type PostViewType = {
 };
 
 const PostView = ({ className, data = {} }: PostViewType) => {
+  const createdAt = dayjs(data?.createdAt).format(
+    dateTimeFormatter["MMM D, YYYY"]
+  );
+  const timeAgo = getTimeAgo(data?.createdAt);
   return (
     <>
       {data?.image && (
@@ -60,8 +66,24 @@ const PostView = ({ className, data = {} }: PostViewType) => {
       )}
 
       <div className={cn("mx-auto mt-10 max-w-3xl space-y-10", className)}>
+        {data?.published && (
+          <div className="flex items-center gap-x-2">
+            <Image
+              className="inline-block h-10 w-10 rounded-full"
+              alt="avatar"
+              src={data?.author.image}
+              width={40}
+              height={40}
+            />
+            <p>
+              {data?.author.name} <br />
+              {createdAt} <span className="text-gray-400">({timeAgo})</span>
+            </p>
+          </div>
+        )}
+
         <div className="space-y-5">
-          <h1 className="break-all text-5xl font-bold">{data?.title}</h1>
+          <h1 className="break-words text-5xl font-bold">{data?.title}</h1>
           {data?.tags?.map((tag: String, index: number) => (
             <Badge key={index} variant={"secondary"} className="mr-4">
               {tag}

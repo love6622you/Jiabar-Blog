@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -86,7 +86,9 @@ const NewPostModal = () => {
           {state === ModalState.Edit && (
             <PostEditorForm onClose={handleClose} />
           )}
-          {state === ModalState.Preview && <PostView data={getPostReviewData()} />}
+          {state === ModalState.Preview && (
+            <PostView data={getPostReviewData()} />
+          )}
         </div>
       </DialogContent>
     </Dialog>
