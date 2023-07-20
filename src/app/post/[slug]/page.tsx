@@ -4,6 +4,7 @@ import { PostComment } from "@/components/post/PostComment";
 import PostLike from "@/components/post/PostLike";
 import PostView from "@/components/post/PostReview";
 import request from "@/lib/request";
+import { useStore } from "@/store/rootStore";
 import { useQueries } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
@@ -26,13 +27,20 @@ const getComments = async (postId: string) => {
 
 const PostDetail = () => {
   const postId = useParams()["slug"];
+  const setPost = useStore().setPost;
 
   const [
     { data: postData, isLoading: postIsLoading },
     { data: commentsData, isLoading: commentsIsLoading }
   ] = useQueries({
     queries: [
-      { queryKey: ["posts", postId], queryFn: () => getPost(postId) },
+      {
+        queryKey: ["posts", postId],
+        queryFn: () => getPost(postId),
+        onSuccess: (data: any) => {
+          setPost(data.data);
+        }
+      },
       { queryKey: ["comments", postId], queryFn: () => getComments(postId) }
     ]
   });

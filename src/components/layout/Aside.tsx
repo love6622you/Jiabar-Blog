@@ -1,27 +1,12 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import RecommendedTags from "../RecommendedTags";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import RecommendedTopic from "./aside/RecommendedTopic";
+import AuthorInfo from "./aside/AuthorInfo";
 
 type AsideType = {
   className?: string;
 };
 
 const Aside = ({ className }: AsideType) => {
-  const pathname = usePathname();
-  const [isPostPage, setIsPostPage] = useState(false);
-
-  useEffect(() => {
-    if (/^\/post\/[^/]+$/.test(pathname)) {
-      setIsPostPage(true);
-    } else {
-      setIsPostPage(false);
-    }
-  }, [pathname]);
-
   return (
     <aside
       className={cn(
@@ -30,30 +15,9 @@ const Aside = ({ className }: AsideType) => {
       )}
       style={{ scrollbarGutter: "stable" }}
     >
-      <div className={cn(!isPostPage && "hidden")}>
-        <div className="relative aspect-square">
-          <Image
-            alt="avatar"
-            src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            fill
-            sizes="*"
-          />
-        </div>
+      <AuthorInfo />
+      <RecommendedTopic />
 
-        <div className="py-2.5">
-          <h3 className="text-lg font-bold">Anne Lee</h3>
-          <p className=" text-gray-400">Product Lead / Designer at Framer</p>
-          <a href="" target="_blank" className="mt-4 block text-purple-700">
-            https://twitter.com/anneshlee
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <h4 className="mb-3.5 font-bold">Recommended Topics</h4>
-        <RecommendedTags />
-      </div>
-      
       <div className="row-start-3">
         <h4 className="mb-3.5 font-bold">Subscribe</h4>
         {Array.from({ length: 1 }, (_, index) => () => []).map((_, index) => {
