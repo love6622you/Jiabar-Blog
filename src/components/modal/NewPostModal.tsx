@@ -20,7 +20,7 @@ enum ModalState {
 }
 
 const NewPostModal = () => {
-  const [state, setState] = useState<String>(ModalState.Edit);
+  const [state, setState] = useState<string>(ModalState.Edit);
   const [open, setOpen] = useState(false);
 
   const stateButtons = [

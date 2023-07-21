@@ -84,7 +84,7 @@ const PostView = ({ className, data = {} }: PostViewType) => {
 
         <div className="space-y-5">
           <h1 className="break-words text-5xl font-bold">{data?.title}</h1>
-          {data?.tags?.map((tag: String, index: number) => (
+          {data?.tags?.map((tag: string, index: number) => (
             <Badge key={index} variant={"secondary"} className="mr-4">
               {tag}
             </Badge>

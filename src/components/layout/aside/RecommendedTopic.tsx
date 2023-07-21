@@ -1,5 +1,6 @@
 "use client";
 
+import Tag from "@/components/shared/Tag";
 import request from "@/lib/request";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -40,13 +41,13 @@ const RecommendedTopic = () => {
       <ul className="flex flex-wrap gap-x-1.5 gap-y-2.5">
         {tags?.data.map((tag: TagType) => {
           return (
-            <li
-              className="cursor-pointer rounded-3xl bg-gray-200/60 px-4 py-1.5 hover:bg-purple-200 hover:text-white"
+            <Tag
               key={tag.id}
-              onClick={() => handleClick(tag.name)}
-            >
-              {tag.name}
-            </li>
+              tagName={tag.name}
+              handleClick={() => {
+                handleClick(tag.name);
+              }}
+            />
           );
         })}
       </ul>

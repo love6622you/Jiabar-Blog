@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, forwardRef, useImperativeHandle, useMemo } from "react";
+import { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -19,8 +19,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import request, { AxiosError } from "@/lib/request";
-import { convertBase64ToFile, convertFileToBase64 } from "@/lib/utils";
+import { cn, convertBase64ToFile, convertFileToBase64 } from "@/lib/utils";
 import { PostFormSchema } from "@/lib/validation-schema";
+import InputTags from "../input/InputTags";
 
 type PostEditorFormType = {
   onClose: () => void;
@@ -30,9 +31,9 @@ type PostEditorFormValues = z.infer<typeof PostFormSchema>;
 
 const getDefaultValues = () => {
   let defaultValues = {
-    title: "title",
-    tags: ["javascript", "web"],
-    content: "content"
+    title: "",
+    tags: [],
+    content: ""
   };
 
   const base64InfoString = localStorage.getItem("formBase64Info") ?? "";
@@ -93,7 +94,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
     mode: "onChange"
   });
 
-  const { handleSubmit, control, getValues } = form;
+  const { handleSubmit, control, getValues, setValue, trigger } = form;
 
   const onSubmit = async (data: PostEditorFormValues) => {
     const image = await convertFileToBase64(data.image);
@@ -144,10 +145,11 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
               <FormControl>
                 <Input
                   {...field}
-                  className="text-transparent file:text-transparent before:text-gray-700 before:content-[attr(data-name)]"
-                  data-name={getValues().image?.name ?? "請上傳檔案"}
+                  className={cn(
+                    `text-transparent file:text-transparent before:text-gray-500 before:content-[attr(data-name)]`
+                  )}
+                  data-name={getValues().image?.name ?? "Upload image"}
                   type="file"
-                  placeholder="請上傳檔案"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target && event.target.files) {
                       onChange(event.target.files[0]);
@@ -168,7 +170,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
             <FormItem>
               <FormLabel>標題</FormLabel>
               <FormControl>
-                <Input placeholder="文章標題" {...field} />
+                <Input placeholder="New post title" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -177,11 +179,20 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
         <FormField
           control={control}
           name="tags"
-          render={({ field }) => (
+          render={({ field: { value, name } }) => (
             <FormItem>
               <FormLabel>標籤</FormLabel>
               <FormControl>
-                <Input placeholder="文章內容" {...field} />
+                <InputTags
+                  name={name}
+                  tags={value}
+                  limit={4}
+                  setValue={setValue}
+                  onChange={() => {
+                    tempFormDataToLocalStorage();
+                    trigger(name);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -195,7 +206,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
               <FormLabel>內容</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="文章內容"
+                  placeholder="Write your post content"
                   className="h-[calc(100%_-_50px)] resize-none"
                   {...field}
                 />
