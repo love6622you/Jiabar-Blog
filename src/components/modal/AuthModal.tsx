@@ -40,7 +40,7 @@ const AuthModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full gap-x-1 rounded-lg md:w-auto">
+        <Button className="w-full gap-x-1 rounded-lg md:w-auto" size={"sm"}>
           Log in
           <AiOutlineRight className="h-4 w-4" />
         </Button>

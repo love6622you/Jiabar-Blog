@@ -35,12 +35,16 @@ const Header = ({ className }: HeaderProps) => {
     router.push(`/search?query=${searchText}`);
   };
 
+  const handleNavigation = (url: string) => {
+    router.push(url);
+  };
+
   // Todo: optimize
   useClickOutside(() => setIsNarbarOpen(false), undefined, [headerRef.current]);
 
   return (
-    <header ref={headerRef} className={cn("bg-white md:text-sm", className)}>
-      <nav className="mx-auto h-full max-w-[1400px] items-center gap-x-5 px-4 md:flex md:px-8">
+    <header ref={headerRef} className={cn("bg-white text-sm", className)}>
+      <nav className="mx-auto max-w-[1400px] items-center px-4 md:flex md:px-8">
         {/* Logo */}
         <div className="flex items-center justify-between">
           <Link href="/">
@@ -57,13 +61,13 @@ const Header = ({ className }: HeaderProps) => {
           {/* mobile */}
           <div className="md:hidden">
             <button
-              className=" align-middle text-gray-500 hover:text-gray-800"
+              className="align-middle text-gray-500 hover:text-gray-800"
               onClick={() => setIsNarbarOpen(!isNarbarOpen)}
             >
               {isNarbarOpen ? (
-                <AiOutlineClose className="h-6 w-6" />
+                <AiOutlineClose className="h-5 w-5" />
               ) : (
-                <AiOutlineMenu className="h-6 w-6" />
+                <AiOutlineMenu className="h-5 w-5" />
               )}
             </button>
           </div>
@@ -72,21 +76,30 @@ const Header = ({ className }: HeaderProps) => {
         {/* Content */}
         <div
           className={cn(
-            "mt-8 md:mt-0 md:flex md:flex-1 md:items-center",
+            "py-5 md:flex md:flex-1 md:items-center md:py-0",
             isNarbarOpen ? "block" : "hidden"
           )}
         >
-          <ul className="space-y-6 md:hidden">
+          {/* Show on mobile */}
+          <ul className="md:hidden">
             {navigation.map((item, idx) => {
               return (
-                <li key={idx} className="text--700 hover:text-gray-900">
-                  <Link href={item.path}>{item.title}</Link>
+                <li
+                  key={idx}
+                  className="pb-5 text-gray-700 hover:text-gray-900"
+                  onClick={() => {
+                    handleNavigation(item.path);
+                  }}
+                >
+                  {/* <Link href={item.path} className="inline-block w-full"> */}
+                  {item.title}
+                  {/* </Link> */}
                 </li>
               );
             })}
           </ul>
 
-          <div className="mt-6 flex-1 items-center justify-end gap-x-6 space-y-6 md:mt-0 md:flex md:space-y-0">
+          <div className="md:flex md:flex-1 md:items-center md:justify-end md:gap-x-6 ">
             {status === "authenticated" ? (
               <>
                 <NewPostModal />
