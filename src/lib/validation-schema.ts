@@ -17,7 +17,7 @@ export const PostFormSchema = z.object({
       (file) => {
         return file && file.size <= MAX_FILE_SIZE;
       },
-      { message: `檔案大小不能超過 ${MAX_FILE_SIZE / 1000} MB` }
+      { message: `檔案大小不能超過 ${MAX_FILE_SIZE / (1024 * 1024)} MB` }
     )
     .refine((file) => file && FILE_ACCEPTED_IMAGE_TYPES.includes(file.type), {
       message: "必須是圖片格式(png , jpg , jpeg , webp)"
