@@ -70,24 +70,24 @@ const NewPostModal = ({ open, setOpen }: NewPostModal) => {
           setState(ModalState.EDIT);
         }}
       >
-        <DialogHeader className="max-h-fit">
+        <DialogHeader className="flex-row items-center gap-3.5 md:flex-col">
           <DialogTitle className="text-center">New Post</DialogTitle>
+          <DialogDescription className="space-x-2 space-y-0 text-center">
+            {stateButtons.map((btn) => (
+              <Button
+                key={btn.label}
+                size={"sm"}
+                variant={"outline"}
+                className={cn(btn.label === state && "text-purple-700")}
+                onClick={btn.onClick}
+              >
+                {btn.label}
+              </Button>
+            ))}
+          </DialogDescription>
         </DialogHeader>
 
-        <DialogDescription className="space-x-2 text-center">
-          {stateButtons.map((btn) => (
-            <Button
-              key={btn.label}
-              variant={"outline"}
-              className={cn(btn.label === state && "text-purple-700")}
-              onClick={btn.onClick}
-            >
-              {btn.label}
-            </Button>
-          ))}
-        </DialogDescription>
-
-        <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto rounded-2xl bg-white px-16 py-10">
+        <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto rounded-2xl bg-white px-8 py-5 md:px-16 md:py-10">
           {state === ModalState.EDIT && (
             <PostEditorForm onClose={handleClose} />
           )}

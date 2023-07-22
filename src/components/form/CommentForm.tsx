@@ -21,6 +21,7 @@ import { MAX_INPUT_LIMIT } from "@/constant/Input";
 import request, { AxiosError } from "@/lib/request";
 import { toast } from "../ui/use-toast";
 import { cn } from "@/lib/utils";
+import SpinLoading from '../shared/SpinLoading';
 
 type CommentFormValues = z.infer<typeof CommentFormSchema>;
 
@@ -100,7 +101,7 @@ export function CommentForm() {
             className={cn("px-6")}
             disabled={isLoading}
           >
-            {isLoading && <LuLoader2 className="mr-2.5 h-4 w-4 animate-spin" />}
+            {isLoading && <SpinLoading />}
             送出
           </Button>
         </div>

@@ -22,6 +22,7 @@ import request, { AxiosError } from "@/lib/request";
 import { cn, convertBase64ToFile, convertFileToBase64 } from "@/lib/utils";
 import { PostFormSchema } from "@/lib/validation-schema";
 import InputTags from "../input/InputTags";
+import SpinLoading from '../shared/SpinLoading';
 
 type PostEditorFormType = {
   onClose: () => void;
@@ -215,8 +216,9 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
             </FormItem>
           )}
         />
-        <div className="text-center">
+        <div className="text-center pt-1.5 pb-3.5">
           <Button type="submit" disabled={isLoading}>
+            {isLoading && <SpinLoading />}
             Create Post
           </Button>
         </div>
