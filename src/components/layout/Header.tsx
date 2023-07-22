@@ -29,6 +29,7 @@ const Header = ({ className }: HeaderProps) => {
   const { status } = useSession();
   const router = useRouter();
 
+  const [openNewPostModal, setOpenNewPostModal] = useState(false);
   const [isNarbarOpen, setIsNarbarOpen] = useState(false);
 
   const handleSearch = (searchText: string) => {
@@ -44,9 +45,23 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header ref={headerRef} className={cn("bg-white text-sm", className)}>
-      <nav className="mx-auto max-w-[1400px] items-center px-4 md:flex md:px-8">
-        {/* Logo */}
-        <div className="flex items-center justify-between">
+      <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-x-4 px-4 md:px-8">
+        {/* hamberger => mobile: show | other: hidden */}
+        <div className="md:hidden">
+          <button
+            className="align-middle text-gray-500 hover:text-gray-800"
+            onClick={() => setIsNarbarOpen(!isNarbarOpen)}
+          >
+            {isNarbarOpen ? (
+              <AiOutlineClose className="h-5 w-5" />
+            ) : (
+              <AiOutlineMenu className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+
+        {/* Logo => mobile: center | other: left  */}
+        <div className="flex items-center gap-x-2">
           <Link href="/">
             <Image
               src="https://www.floatui.com/logo.svg"
@@ -57,60 +72,46 @@ const Header = ({ className }: HeaderProps) => {
           </Link>
 
           <SearchBar onSearch={handleSearch} />
-
-          {/* mobile */}
-          <div className="md:hidden">
-            <button
-              className="align-middle text-gray-500 hover:text-gray-800"
-              onClick={() => setIsNarbarOpen(!isNarbarOpen)}
-            >
-              {isNarbarOpen ? (
-                <AiOutlineClose className="h-5 w-5" />
-              ) : (
-                <AiOutlineMenu className="h-5 w-5" />
-              )}
-            </button>
-          </div>
         </div>
 
-        {/* Content */}
-        <div
-          className={cn(
-            "py-5 md:flex md:flex-1 md:items-center md:py-0",
-            isNarbarOpen ? "block" : "hidden"
+        {/* Actions => mobile: show | other: show */}
+        <div className="flex items-center justify-end gap-x-6 ">
+          {status === "authenticated" ? (
+            <>
+              <div className="hidden md:block">
+                <NewPostModal
+                  open={openNewPostModal}
+                  setOpen={setOpenNewPostModal}
+                />
+              </div>
+              <UserInfoDropdownMenu
+                openNewPostModal={() => setOpenNewPostModal(true)}
+              />
+            </>
+          ) : (
+            <AuthModal />
           )}
-        >
-          {/* Show on mobile */}
-          <ul className="md:hidden">
-            {navigation.map((item, idx) => {
-              return (
-                <li
-                  key={idx}
-                  className="pb-5 text-gray-700 hover:text-gray-900"
-                  onClick={() => {
-                    handleNavigation(item.path);
-                  }}
-                >
-                  {/* <Link href={item.path} className="inline-block w-full"> */}
-                  {item.title}
-                  {/* </Link> */}
-                </li>
-              );
-            })}
-          </ul>
-
-          <div className="md:flex md:flex-1 md:items-center md:justify-end md:gap-x-6 ">
-            {status === "authenticated" ? (
-              <>
-                <NewPostModal />
-                <UserInfoDropdownMenu />
-              </>
-            ) : (
-              <AuthModal />
-            )}
-          </div>
         </div>
       </nav>
+
+      {/* Navigation List => mobile: show (when opening) | other: hidden */}
+      {isNarbarOpen && (
+        <ul className="p-4 space-y-6">
+          {navigation.map((item, idx) => {
+            return (
+              <li
+                key={idx}
+                className="cursor-pointer text-gray-700 hover:text-gray-900"
+                onClick={() => {
+                  handleNavigation(item.path);
+                }}
+              >
+                {item.title}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </header>
   );
 };

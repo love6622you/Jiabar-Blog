@@ -23,11 +23,11 @@ const SearchBar = ({ onSearch }: SearchBar) => {
   };
 
   return (
-    <div className="ml-5 mr-auto flex items-center rounded-md border">
-      <AiOutlineSearch className="ml-1.5 h-5 w-5 text-gray-300" />
+    <div className="mr-auto flex items-center rounded-3xl bg-gray-100">
+      <AiOutlineSearch className="ml-2.5 h-5 w-5 text-gray-400" />
       <Input
         type="text"
-        className="h-8 border-none focus-visible:ring-0 focus-visible:ring-offset-0 md:h-9"
+        className="h-8 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:h-9"
         placeholder="Search..."
         value={searchValue}
         onChange={handleChange}

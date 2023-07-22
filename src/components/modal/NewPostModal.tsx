@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -14,26 +14,30 @@ import PostEditorForm from "../form/PostEditorForm";
 import { cn } from "@/lib/utils";
 import PostView from "../post/PostReview";
 
+type NewPostModal = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
+
 enum ModalState {
-  Edit = "Edit",
-  Preview = "Preview"
+  EDIT = "Edit",
+  PREVIEW = "Preview"
 }
 
-const NewPostModal = () => {
-  const [state, setState] = useState<string>(ModalState.Edit);
-  const [open, setOpen] = useState(false);
+const NewPostModal = ({ open, setOpen }: NewPostModal) => {
+  const [state, setState] = useState<string>(ModalState.EDIT);
 
   const stateButtons = [
     {
-      label: ModalState.Edit,
+      label: ModalState.EDIT,
       onClick: () => {
-        setState(ModalState.Edit);
+        setState(ModalState.EDIT);
       }
     },
     {
-      label: ModalState.Preview,
+      label: ModalState.PREVIEW,
       onClick: () => {
-        setState(ModalState.Preview);
+        setState(ModalState.PREVIEW);
       }
     }
   ];
@@ -52,6 +56,7 @@ const NewPostModal = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
+          size={"sm"}
           variant={"outline"}
           className="hover:border-purple-700 hover:bg-transparent hover:text-purple-700"
         >
@@ -62,7 +67,7 @@ const NewPostModal = () => {
       <DialogContent
         className="flex h-[100dvh] max-w-[100dvw] flex-col bg-gray-50"
         onOpenAutoFocus={() => {
-          setState(ModalState.Edit);
+          setState(ModalState.EDIT);
         }}
       >
         <DialogHeader className="max-h-fit">
@@ -83,10 +88,10 @@ const NewPostModal = () => {
         </DialogDescription>
 
         <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto rounded-2xl bg-white px-16 py-10">
-          {state === ModalState.Edit && (
+          {state === ModalState.EDIT && (
             <PostEditorForm onClose={handleClose} />
           )}
-          {state === ModalState.Preview && (
+          {state === ModalState.PREVIEW && (
             <PostView data={getPostReviewData()} />
           )}
         </div>
