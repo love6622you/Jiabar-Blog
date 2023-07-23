@@ -38,6 +38,7 @@ const Header = ({ className }: HeaderProps) => {
 
   const handleNavigation = (url: string) => {
     router.push(url);
+    setIsNarbarOpen(false)
   };
 
   // Todo: optimize

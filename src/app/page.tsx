@@ -35,13 +35,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mx-5 py-10 md:mx-[15%] divide-y-2">
+      <div className="mx-5 divide-y-2 py-10 md:mx-[15%]">
         {posts?.data?.map((post: any) => {
-          return (
-            <>
-              <PostCard post={post} key={post.id} />
-            </>
-          );
+          return <PostCard post={post} key={post.id} />;
         })}
       </div>
     </section>

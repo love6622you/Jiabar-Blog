@@ -8,12 +8,9 @@ type PostCardType = {
 const PostCard = ({ post }: PostCardType) => {
   const timeAgo = getTimeAgo(post.createdAt);
   return (
-    <article
-      key={post.id}
-      className="relative mb-2.5 cursor-pointer bg-white transition hover:shadow-xl"
-    >
+    <article className="relative mb-2.5 cursor-pointer bg-white transition hover:shadow-xl">
       <Link
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-10"
         href={{
           pathname: `/post/${post.id}`
         }}
@@ -45,7 +42,7 @@ const PostCard = ({ post }: PostCardType) => {
           </div>
 
           <div className="flex flex-1 flex-col justify-between gap-10">
-            <div className="border-s border-gray-700/10 sm:border-l-transparent">
+            <div>
               <h3 className="line-clamp-3 text-xl font-bold text-gray-700">
                 {post.title}
               </h3>
