@@ -20,8 +20,8 @@ type HeaderProps = {
 
 const navigation = [
   { title: "Home", path: "/" },
-  { title: "About", path: "/about" },
-  { title: "Contact", path: "/contact" }
+  { title: "About", path: "/about" }
+  // { title: "Contact", path: "/contact" }
 ];
 
 const Header = ({ className }: HeaderProps) => {
@@ -38,7 +38,7 @@ const Header = ({ className }: HeaderProps) => {
 
   const handleNavigation = (url: string) => {
     router.push(url);
-    setIsNarbarOpen(false)
+    setIsNarbarOpen(false);
   };
 
   // Todo: optimize
@@ -46,7 +46,7 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <header ref={headerRef} className={cn("bg-white text-sm", className)}>
-      <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-x-4 px-4 md:px-8">
+      <nav className="mx-auto flex h-[50px] max-w-[1400px]  items-center justify-between gap-x-4 px-4 md:h-[70px] md:px-8">
         {/* hamberger => mobile: show | other: hidden */}
         <div className="md:hidden">
           <button
@@ -64,12 +64,13 @@ const Header = ({ className }: HeaderProps) => {
         {/* Logo => mobile: center | other: left  */}
         <div className="flex items-center gap-x-2">
           <Link href="/">
-            <Image
+            {/* <Image
               src="https://www.floatui.com/logo.svg"
               width={120}
               height={50}
               alt="JB logo"
-            />
+            /> */}
+            <p className="font-bold text-purple-700">Jiabar Blog</p>
           </Link>
 
           <SearchBar onSearch={handleSearch} />
@@ -97,7 +98,7 @@ const Header = ({ className }: HeaderProps) => {
 
       {/* Navigation List => mobile: show (when opening) | other: hidden */}
       {isNarbarOpen && (
-        <ul className="p-4 space-y-6">
+        <ul className="space-y-6 p-4">
           {navigation.map((item, idx) => {
             return (
               <li

@@ -1,15 +1,17 @@
 const about = () => {
   return (
     <section>
-      <div className="flex-center h-60 flex-col border-b-2">
+      <div className="flex-center h-40 flex-col border-b px-10 md:h-[12.5rem]">
         <div className="max-w-xl">
-          <h2 className="pb-2 text-3xl font-bold">About</h2>
-          <p>Nice tagline here about Me, Myself & I</p>
+          <h2 className="pb-2 text-2xl font-bold md:text-3xl">About</h2>
+          <p>
+            How to design this blog includes using which framework, CSS library.
+          </p>
         </div>
       </div>
 
       <article>
-        <div className="mx-20 py-10">test</div>
+        <div className="mx-20 py-10">TBD</div>
       </article>
     </section>
   );

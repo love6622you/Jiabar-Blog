@@ -1,6 +1,7 @@
 "use client";
 
 import PostCard from "@/components/post/PostCard";
+import NoData from "@/components/shared/NoData";
 import request from "@/lib/request";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -33,7 +34,7 @@ const PostSearch = () => {
   }
 
   if (!posts?.data.length) {
-    return <div>No Data</div>;
+    return <NoData />;
   }
 
   return (

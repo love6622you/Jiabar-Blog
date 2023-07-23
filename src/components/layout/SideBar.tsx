@@ -19,11 +19,11 @@ const navigation = [
     name: "About",
     icon: <AiOutlineInfoCircle className="h-6 w-6" />
   },
-  {
-    href: "/contact",
-    name: "Contact",
-    icon: <AiOutlineContacts className="h-6 w-6" />
-  }
+  // {
+  //   href: "/contact",
+  //   name: "Contact",
+  //   icon: <AiOutlineContacts className="h-6 w-6" />
+  // }
 ];
 
 type SideBarType = {
