@@ -10,7 +10,7 @@ const PostCard = ({ post }: PostCardType) => {
   return (
     <article
       key={post.id}
-      className="group relative mb-4 cursor-pointer bg-white transition hover:shadow-xl"
+      className="relative mb-2.5 cursor-pointer bg-white transition hover:shadow-xl"
     >
       <Link
         className="absolute inset-0 z-0"
@@ -19,7 +19,7 @@ const PostCard = ({ post }: PostCardType) => {
         }}
       />
 
-      <div className={cn("mx-10 py-10", ["pt-5"])}>
+      <div className={cn("relative mx-10 pb-10 pt-5")}>
         <div className="mb-4 flex items-center gap-x-2">
           <Image
             className="inline-block h-10 w-10 rounded-full"
@@ -33,25 +33,22 @@ const PostCard = ({ post }: PostCardType) => {
           </p>
         </div>
 
-        <div className="flex">
-          <div className="relative hidden sm:block sm:basis-60">
+        <div className="flex gap-5 max-md:flex-col">
+          <div className="block aspect-auto h-32 w-40 flex-shrink-0 self-center">
             <Image
-              alt="Guitar"
+              alt="postImage"
               src={post.image}
-              className="object-cover"
-              fill
-              sizes="*"
+              className="h-full w-full object-cover"
+              width={160}
+              height={128}
             />
           </div>
 
-          <div className="flex flex-1 flex-col justify-between gap-10 px-4 sm:px-6">
+          <div className="flex flex-1 flex-col justify-between gap-10">
             <div className="border-s border-gray-700/10 sm:border-l-transparent">
-              <Link href="#">
-                <h3 className="text-xl font-bold text-gray-700">
-                  {post.title}
-                </h3>
-              </Link>
-
+              <h3 className="line-clamp-3 text-xl font-bold text-gray-700">
+                {post.title}
+              </h3>
               <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
                 {post.content}
               </p>

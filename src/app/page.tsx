@@ -24,18 +24,24 @@ export default function Home() {
 
   return (
     <section>
-      <div className="flex-center h-60 flex-col border-b">
+      <div className="flex-center h-40 flex-col border-b px-10 md:h-[12.5rem]">
         <div className="max-w-xl">
-          <h2 className="pb-2 text-3xl font-bold">Explore, be curious.</h2>
+          <h2 className="pb-2 text-2xl font-bold md:text-3xl">
+            Explore, be curious.
+          </h2>
           <p>
             Discover stories, thinking, and expertise from writers on any topic.
           </p>
         </div>
       </div>
 
-      <div className="mx-20 py-10">
+      <div className="mx-5 py-10 md:mx-[15%] divide-y-2">
         {posts?.data?.map((post: any) => {
-          return <PostCard post={post} key={post.id} />;
+          return (
+            <>
+              <PostCard post={post} key={post.id} />
+            </>
+          );
         })}
       </div>
     </section>

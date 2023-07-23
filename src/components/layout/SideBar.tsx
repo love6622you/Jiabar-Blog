@@ -32,8 +32,8 @@ type SideBarType = {
 
 const SideBar = ({ className }: SideBarType) => {
   return (
-    <nav className={cn("", className)}>
-      <div className="flex h-full flex-col items-center justify-center py-10">
+    <nav className={cn(className)}>
+      <div className="flex h-full flex-col items-end justify-center py-10">
         <nav className="flex flex-col gap-y-5">
           {navigation.map((item, idx) => (
             <Link

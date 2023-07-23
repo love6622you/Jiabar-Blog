@@ -21,13 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen overflow-y-scroll bg-gray-100 md:pt-[80px]">
+      <body className="min-h-screen overflow-y-scroll bg-gray-100 md:pt-[60px]">
         <Providers>
-          <Header className="fixed left-0 top-0 z-50 w-full md:max-h-[80px]" />
+          <Header className="fixed left-0 top-0 z-50 w-full md:max-h-[60px]" />
           <div className="mx-auto flex max-w-[1400px] gap-x-5 py-20 md:py-10">
-            {/* <SideBar className={`${styles.barSticky} basis-24`} />
-            <main className="flex-1 rounded-2xl bg-white">{children}</main>
-            <Aside className={`${styles.barSticky} basis-[22.5rem]`} /> */}
+            <SideBar
+              className={`${styles.barSticky} w-20 pl-5 max-md:hidden`}
+            />
+            <main className="flex-[1] rounded-2xl bg-white">{children}</main>
+            <Aside className={`${styles.barSticky} w-80 max-lg:hidden`} />
           </div>
         </Providers>
         <Toaster />
