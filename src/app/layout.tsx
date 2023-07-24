@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Jiabar Blog",
-  description: "Jiabar 部落格是一個可以讓你隨心記錄的發文平台"
+  description: "Jiabar Blog 是一個可以讓你隨心記錄的發文平台"
 };
 
 const styles = {
