@@ -30,8 +30,8 @@ jobs:
       - name: Generate Prisma client then build
         run: npm run build-vercel
 
-      - name: Copy prebuilt artifacts
-        run: cp -R .next vercel/output
+      - name: Save prebuilt files
+        run: mv .vercel/output /github/workspace
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --local-config=vercel.json
