@@ -26,9 +26,7 @@ jobs:
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Generate Prisma client then build
-        run: npm run build-vercel
-
-      - name: Deploy Project Artifacts to Vercel
-        run: npx vercel --prod --build-env VERCEL_SKIP_BUILD=true --token=${{ secrets.VERCEL_TOKEN }}
+      
+      # 將 build 的流程直接在 Vercel 進行
+      - name: Deploy to Vercel
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
