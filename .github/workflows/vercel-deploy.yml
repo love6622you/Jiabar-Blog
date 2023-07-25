@@ -31,7 +31,7 @@ jobs:
         run: npm run build-vercel
 
       - name: Copy prebuilt artifacts
-        run: cp -R .next .vercel/output
+        run: cp -R .next vercel/output
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
