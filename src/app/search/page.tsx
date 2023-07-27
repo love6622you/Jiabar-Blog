@@ -1,9 +1,10 @@
 "use client";
 
 import PostCard from "@/components/post/PostCard";
+import DataLoading from "@/components/shared/DataLoading";
 import NoData from "@/components/shared/NoData";
 import request from "@/lib/request";
-import { IResponse } from "@/types";
+import { IPost, IResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
@@ -30,16 +31,8 @@ const PostSearch = () => {
     queryKey: ["search", searchText]
   }) as { data: IResponse; isLoading: boolean };
 
-  if (isLoading) {
-    return <div>isLoading...</div>;
-  }
-
-  if (!posts?.data.length) {
-    return <NoData />;
-  }
-
   return (
-    <section>
+    <section className="flex h-full flex-col">
       {/* <div className="flex-center h-60 flex-col border-b">
         <div className="max-w-xl">
           <h2 className="pb-2 text-3xl font-bold">Explore, be curious.</h2>
@@ -49,10 +42,14 @@ const PostSearch = () => {
         </div>
       </div> */}
 
-      <div className="mx-20 py-10">
-        {posts?.data?.map((post: any) => {
-          return <PostCard post={post} key={post.id} />;
-        })}
+      <div className="relative mx-20 h-full py-10">
+        {isLoading ? (
+          <DataLoading />
+        ) : posts?.data.length === 0 ? (
+          <NoData />
+        ) : (
+          posts.data.map((post: any) => <PostCard post={post} key={post.id} />)
+        )}
       </div>
     </section>
   );

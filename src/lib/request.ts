@@ -6,7 +6,8 @@ export { AxiosError };
  * Axios 設定
  */
 const request = axios.create({
-  baseURL: `/api`
+  baseURL: `/api`,
+  timeout: 100000
 });
 
 request.interceptors.request.use(
