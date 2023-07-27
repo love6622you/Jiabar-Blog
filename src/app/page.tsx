@@ -3,8 +3,9 @@
 import { useQuery } from "@tanstack/react-query";
 import PostCard from "@/components/post/PostCard";
 import request from "@/lib/request";
+import { IPost, IResponse } from "@/types";
 
-const allPosts = async () => {
+const getPosts = async () => {
   const res = await request({
     url: "/posts",
     method: "GET"
@@ -14,9 +15,9 @@ const allPosts = async () => {
 
 export default function Home() {
   const { data: posts, isLoading } = useQuery({
-    queryFn: allPosts,
+    queryFn: getPosts,
     queryKey: ["posts"]
-  });
+  }) as { data: IResponse; isLoading: boolean };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -36,7 +37,7 @@ export default function Home() {
       </div>
 
       <div className="mx-5 divide-y-2 py-10 md:mx-[15%]">
-        {posts?.data?.map((post: any) => {
+        {posts?.data?.map((post: IPost) => {
           return <PostCard post={post} key={post.id} />;
         })}
       </div>

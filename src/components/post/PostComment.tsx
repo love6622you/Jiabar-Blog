@@ -10,19 +10,10 @@ import { BiMessage } from "react-icons/bi";
 import Image from "next/image";
 import { CommentForm } from "../form/CommentForm";
 import { getTimeAgo } from "@/lib/utils";
-
-type CommentDataType = {
-  id: string;
-  content: string;
-  createdAt: Date;
-  user: {
-    name: string;
-    image: string;
-  };
-};
+import { IComment } from "@/types";
 
 type PostCommentType = {
-  data: CommentDataType[];
+  data: IComment[];
 };
 
 export function PostComment({ data }: PostCommentType) {
@@ -44,7 +35,7 @@ export function PostComment({ data }: PostCommentType) {
         <CommentForm />
         <hr className="mt-8" />
         <ul className="divide-y">
-          {data?.map((comment: CommentDataType) => (
+          {data?.map((comment: IComment) => (
             <li key={comment.id} className="py-6">
               <div className="mb-4 flex items-center gap-x-2.5">
                 <Image
@@ -54,6 +45,7 @@ export function PostComment({ data }: PostCommentType) {
                   width={40}
                   height={40}
                 />
+
                 <div className="space-y-0.5">
                   <p>{comment.user.name}</p>
                   <p className="text-gray-400">

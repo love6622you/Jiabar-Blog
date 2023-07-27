@@ -1,10 +1,12 @@
 import { cn, getTimeAgo } from "@/lib/utils";
+import { IPost } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
 type PostCardType = {
-  post: any;
+  post: IPost;
 };
+
 const PostCard = ({ post }: PostCardType) => {
   const timeAgo = getTimeAgo(post.createdAt);
   return (
@@ -52,7 +54,7 @@ const PostCard = ({ post }: PostCardType) => {
             </div>
 
             <div className="flex justify-start gap-x-3">
-              {post.tags.map((tag: any) => {
+              {post.tags.map((tag) => {
                 return (
                   <span
                     key={tag}

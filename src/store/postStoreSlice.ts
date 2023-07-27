@@ -1,13 +1,14 @@
-import { Post } from "@prisma/client";
+import { IPost } from "@/types";
 import { StateCreator } from "zustand";
+
 export type PostState = {
-  post: any;
-  setPost: (post: Post | object) => void;
+  post: IPost | object;
+  setPost: (post: IPost) => void;
 };
 
 export const createPostSlice: StateCreator<PostState> = (set) => ({
   post: {},
-  setPost: (post: object) =>
+  setPost: (post: IPost) =>
     set((state) => ({
       ...state,
       post

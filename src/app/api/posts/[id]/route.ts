@@ -14,6 +14,7 @@ export async function GET(
       },
       select: {
         id: true,
+        createdAt: true,
         title: true,
         content: true,
         image: true,
@@ -25,8 +26,7 @@ export async function GET(
           }
         },
         hearts_count: true,
-        tags: true,
-        createdAt: true
+        tags: true
       }
     });
 

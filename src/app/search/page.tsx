@@ -3,6 +3,7 @@
 import PostCard from "@/components/post/PostCard";
 import NoData from "@/components/shared/NoData";
 import request from "@/lib/request";
+import { IResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
@@ -27,7 +28,7 @@ const PostSearch = () => {
       return allPosts(params);
     },
     queryKey: ["search", searchText]
-  });
+  }) as { data: IResponse; isLoading: boolean };
 
   if (isLoading) {
     return <div>isLoading...</div>;

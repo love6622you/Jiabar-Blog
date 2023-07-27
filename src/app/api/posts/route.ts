@@ -13,10 +13,20 @@ export async function GET(req: NextRequest) {
       where: {
         OR: [{ title: { contains: searchText || "", mode: "insensitive" } }]
       },
-      include: {
-        author: true,
-        hearts: true,
-        comments: true,
+      select: {
+        id: true,
+        createdAt: true,
+        title: true,
+        content: true,
+        image: true,
+        published: true,
+        author: {
+          select: {
+            name: true,
+            image: true
+          }
+        },
+        hearts_count: true,
         tags: true
       },
       orderBy: {
