@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import NextAuth, { Session, type NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -22,6 +23,15 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: "jwt"
+  },
+  callbacks: {
+    session({ session, token }) {
+      session.user = {
+        ...session.user,
+        id: token.sub
+      };
+      return session;
+    }
   },
   debug: process.env.NODE_ENV !== "production"
 };
