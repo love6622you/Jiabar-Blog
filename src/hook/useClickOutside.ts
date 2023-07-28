@@ -10,6 +10,7 @@ export const useClickOutside = <T extends HTMLElement>(
   const ref = useRef<T>();
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
       const { target } = event ?? {};
 
@@ -18,9 +19,7 @@ export const useClickOutside = <T extends HTMLElement>(
           target?.hasAttribute("data-ignore-outside-clicks") ||
           (!document.body.contains(target) && target.tagName !== "HTML");
 
-        const shouldTrigger = nodes.every(
-          (node) => node && !event.composedPath().includes(node)
-        );
+        const shouldTrigger = nodes.every((node) => node && !event.composedPath().includes(node));
 
         shouldTrigger && !shouldIgnore && handler();
       } else if (ref.current && !ref.current.contains(target)) {

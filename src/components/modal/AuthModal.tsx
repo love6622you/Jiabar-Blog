@@ -4,19 +4,8 @@ import React from "react";
 import { signIn } from "next-auth/react";
 
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "../ui/dialog";
-import {
-  AiOutlineRight,
-  AiOutlineGithub,
-  AiOutlineGoogle
-} from "react-icons/ai";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { AiOutlineRight, AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import { LucideLoader2 } from "lucide-react";
 
 const AuthModal = () => {
@@ -68,11 +57,7 @@ const AuthModal = () => {
                 }}
                 disabled={isLoading}
               >
-                {isLoading ? (
-                  <LucideLoader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  btn.icons
-                )}
+                {isLoading ? <LucideLoader2 className="mr-2 h-4 w-4 animate-spin" /> : btn.icons}
                 {btn.label}
               </Button>
             );

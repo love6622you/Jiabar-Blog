@@ -2,13 +2,13 @@ import { IPost } from "@/types";
 import { StateCreator } from "zustand";
 
 export type PostState = {
-  post: IPost | object;
-  setPost: (post: IPost) => void;
+  post: IPost | null;
+  setPost: (post: IPost | null) => void;
 };
 
 export const createPostSlice: StateCreator<PostState> = (set) => ({
-  post: {},
-  setPost: (post: IPost) =>
+  post: null,
+  setPost: (post) =>
     set((state) => ({
       ...state,
       post

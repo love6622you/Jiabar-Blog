@@ -34,23 +34,13 @@ const PostCard = ({ post }: PostCardType) => {
 
         <div className="flex gap-5 max-md:flex-col">
           <div className="block aspect-auto h-32 w-40 flex-shrink-0 self-center">
-            <Image
-              alt="postImage"
-              src={post.image}
-              className="h-full w-full object-cover"
-              width={160}
-              height={128}
-            />
+            <Image alt="postImage" src={post.image} className="h-full w-full object-cover" width={160} height={128} />
           </div>
 
           <div className="flex flex-1 flex-col justify-between gap-10">
             <div>
-              <h3 className="line-clamp-3 text-xl font-bold text-gray-700">
-                {post.title}
-              </h3>
-              <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
-                {post.content}
-              </p>
+              <h3 className="line-clamp-3 text-xl font-bold text-gray-700">{post.title}</h3>
+              <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">{post.content}</p>
             </div>
 
             <div className="flex justify-start gap-x-3">

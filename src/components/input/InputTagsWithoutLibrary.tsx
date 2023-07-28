@@ -1,6 +1,6 @@
 "use client";
 
-import React, { KeyboardEvent, useRef, useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
 import { Input } from "../ui/input";
 import { AiOutlineClose } from "react-icons/ai";
 import Tag from "../shared/Tag";

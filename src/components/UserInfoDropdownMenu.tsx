@@ -6,7 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
+  // DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
@@ -16,9 +16,7 @@ type UserInfoDropdownMenuType = {
   openNewPostModal: () => void;
 };
 
-export function UserInfoDropdownMenu({
-  openNewPostModal
-}: UserInfoDropdownMenuType) {
+export function UserInfoDropdownMenu({ openNewPostModal }: UserInfoDropdownMenuType) {
   const { data } = useSession();
 
   return (
@@ -32,10 +30,7 @@ export function UserInfoDropdownMenu({
 
       <DropdownMenuContent className="w-56 " forceMount={true}>
         <DropdownMenuGroup className="gap-y-4 md:hidden">
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={openNewPostModal}
-          >
+          <DropdownMenuItem className="cursor-pointer" onClick={openNewPostModal}>
             <LuPencil className="mr-2 h-4 w-4" />
             <span>Write Post</span>
           </DropdownMenuItem>

@@ -1,10 +1,4 @@
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { BiMessage } from "react-icons/bi";
 
 import Image from "next/image";
@@ -48,9 +42,7 @@ export function PostComment({ data }: PostCommentType) {
 
                 <div className="space-y-0.5">
                   <p>{comment.user.name}</p>
-                  <p className="text-gray-400">
-                    {getTimeAgo(comment?.createdAt)}
-                  </p>
+                  <p className="text-gray-400">{getTimeAgo(comment?.createdAt)}</p>
                 </div>
               </div>
               <p>{comment?.content}</p>

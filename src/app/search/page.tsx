@@ -48,7 +48,7 @@ const PostSearch = () => {
         ) : posts?.data.length === 0 ? (
           <NoData />
         ) : (
-          posts.data.map((post: any) => <PostCard post={post} key={post.id} />)
+          posts.data.map((post: IPost) => <PostCard post={post} key={post.id} />)
         )}
       </div>
     </section>

@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   const searchText = searchParams.get("query") ?? "";
 
   try {
-    let posts = await prisma.post.findMany({
+    const posts = await prisma.post.findMany({
       where: {
         OR: [{ title: { contains: searchText || "", mode: "insensitive" } }]
       },
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
       }
     });
 
-    let data = await posts.map((post) => {
+    const data = await posts.map((post) => {
       return {
         ...post,
         tags: post.tags.map((tag) => tag.name)

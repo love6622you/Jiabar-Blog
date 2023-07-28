@@ -6,14 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
@@ -22,7 +15,7 @@ import request, { AxiosError } from "@/lib/request";
 import { cn, convertBase64ToFile, convertFileToBase64 } from "@/lib/utils";
 import { PostFormSchema } from "@/lib/validation-schema";
 import InputTags from "../input/InputTags";
-import SpinLoading from '../shared/SpinLoading';
+import SpinLoading from "../shared/SpinLoading";
 
 type PostEditorFormType = {
   onClose: () => void;
@@ -40,7 +33,7 @@ const getDefaultValues = () => {
   const base64InfoString = localStorage.getItem("formBase64Info") ?? "";
   const tempPostDataString = localStorage.getItem("tempPostData") ?? "";
 
-  let base64Info = base64InfoString && JSON.parse(base64InfoString);
+  const base64Info = base64InfoString && JSON.parse(base64InfoString);
   let tempData = tempPostDataString && JSON.parse(tempPostDataString);
 
   if (base64Info) {
@@ -104,7 +97,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
 
   // Other functions
   const tempFormDataToLocalStorage = async () => {
-    let data = getValues();
+    const data = getValues();
     const file = data.image;
     let base64Info = null;
 
@@ -122,10 +115,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
     }
 
     // 2. Save data to storage
-    localStorage.setItem(
-      "tempPostData",
-      JSON.stringify({ ...data, image: base64Info, published: false })
-    );
+    localStorage.setItem("tempPostData", JSON.stringify({ ...data, image: base64Info, published: false }));
   };
 
   return (

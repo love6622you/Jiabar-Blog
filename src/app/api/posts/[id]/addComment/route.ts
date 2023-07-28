@@ -5,9 +5,17 @@ import { NextRequest, NextResponse } from "next/server";
 let result = null;
 
 export async function POST(req: NextRequest) {
-  const session = await checkSession();
-  if (session instanceof NextResponse) {
-    return session;
+  const sessionResponse = await checkSession();
+  if (sessionResponse instanceof NextResponse) {
+    return sessionResponse;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: sessionResponse.email! }
+  });
+
+  if (!user) {
+    return sessionResponse;
   }
 
   const { content, postId } = await req.json();
@@ -21,10 +29,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result, { status: 404 });
   }
 
-  const prismaUser = await prisma.user.findUnique({
-    where: { email: session.email! }
-  });
-
   const post = await prisma.post.findUnique({
     where: { id: postId }
   });
@@ -34,7 +38,7 @@ export async function POST(req: NextRequest) {
       data: {
         title: post?.title,
         content,
-        userId: prismaUser?.id!,
+        userId: user.id,
         postId: postId
       }
     });

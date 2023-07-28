@@ -43,13 +43,12 @@ const fakeData = {
 
 type PostViewType = {
   contentClassName?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
 };
 
 const PostView = ({ contentClassName, data = {} }: PostViewType) => {
-  const createdAt = dayjs(data?.createdAt).format(
-    dateTimeFormatter["MMM D, YYYY"]
-  );
+  const createdAt = dayjs(data?.createdAt).format(dateTimeFormatter["MMM D, YYYY"]);
   const timeAgo = getTimeAgo(data?.createdAt);
   return (
     <>
@@ -65,12 +64,7 @@ const PostView = ({ contentClassName, data = {} }: PostViewType) => {
         </div>
       )}
 
-      <div
-        className={cn(
-          "mx-auto mt-10 w-10/12 max-w-3xl space-y-10",
-          contentClassName
-        )}
-      >
+      <div className={cn("mx-auto mt-10 w-10/12 max-w-3xl space-y-10", contentClassName)}>
         {data?.published && (
           <div className="flex items-center gap-x-2">
             <Image
@@ -88,9 +82,7 @@ const PostView = ({ contentClassName, data = {} }: PostViewType) => {
         )}
 
         <div className="space-y-5">
-          <h1 className="break-words text-3xl font-bold sm:text-4xl md:text-5xl">
-            {data?.title}
-          </h1>
+          <h1 className="break-words text-3xl font-bold sm:text-4xl md:text-5xl">{data?.title}</h1>
           {data?.tags?.map((tag: string, index: number) => (
             <Badge key={index} variant={"secondary"} className="mr-4">
               {tag}

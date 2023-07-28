@@ -14,23 +14,15 @@ const styles = {
   barSticky: "sticky top-10 z-30 h-[calc(100vh_-_80px)]"
 };
 
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="min-h-screen overflow-y-scroll bg-gray-100 md:pt-[80px]">
         <Providers>
           <Header className="fixed left-0 top-0 z-50 w-full md:max-h-[80px]" />
           <div className="mx-auto flex max-w-[1400px] gap-x-5 py-20 md:py-10">
-            <SideBar
-              className={`${styles.barSticky} w-20 pl-5 max-md:hidden`}
-            />
-            <main className="relative min-h-[calc(100vh_-_100px)] flex-[1] rounded-2xl bg-white ">
-              {children}
-            </main>
+            <SideBar className={`${styles.barSticky} w-20 pl-5 max-md:hidden`} />
+            <main className="relative min-h-[calc(100vh_-_100px)] flex-[1] rounded-2xl bg-white ">{children}</main>
             <Aside className={`${styles.barSticky} w-80 max-lg:hidden`} />
           </div>
         </Providers>

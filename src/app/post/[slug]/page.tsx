@@ -35,24 +35,19 @@ const PostDetail = () => {
   const postId = useParams()["slug"];
   const setPost = useStore().setPost;
 
-  const [
-    { data: postData, isLoading: postIsLoading },
-    { data: commentsData, isLoading: commentsIsLoading }
-  ] = useQueries({
-    queries: [
-      {
-        queryKey: ["posts", postId],
-        queryFn: () => getPost(postId),
-        onSuccess: (data: any) => {
-          setPost(data.data);
-        }
-      },
-      { queryKey: ["comments", postId], queryFn: () => getComments(postId) }
-    ]
-  }) as [
-    { data: IResponse; isLoading: boolean },
-    { data: IResponse; isLoading: boolean }
-  ];
+  const [{ data: postData, isLoading: postIsLoading }, { data: commentsData, isLoading: commentsIsLoading }] =
+    useQueries({
+      queries: [
+        {
+          queryKey: ["posts", postId],
+          queryFn: () => getPost(postId),
+          onSuccess: (data: IResponse) => {
+            setPost(data.data);
+          }
+        },
+        { queryKey: ["comments", postId], queryFn: () => getComments(postId) }
+      ]
+    }) as [{ data: IResponse; isLoading: boolean }, { data: IResponse; isLoading: boolean }];
 
   return (
     <section className="flex h-full flex-col">
@@ -62,16 +57,8 @@ const PostDetail = () => {
         <NoData />
       ) : (
         <>
-          <PostView
-            data={postData?.data}
-            contentClassName={POST_CONENT_LIMIT_WIDTH}
-          />
-          <div
-            className={cn(
-              "mx-auto flex gap-x-5 py-16",
-              POST_CONENT_LIMIT_WIDTH
-            )}
-          >
+          <PostView data={postData?.data} contentClassName={POST_CONENT_LIMIT_WIDTH} />
+          <div className={cn("mx-auto flex gap-x-5 py-16", POST_CONENT_LIMIT_WIDTH)}>
             <PostLike postId={postId} count={postData?.data.hearts_count} />
             {!commentsIsLoading && <PostComment data={commentsData?.data} />}
           </div>

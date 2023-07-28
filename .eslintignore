@@ -1,0 +1,11 @@
+.next
+.cache
+package-lock.json
+public
+node_modules
+next.config.ts
+yarn.lock
+*.d.ts
+
+# Shadcn 獨立拆出來的元件
+/src/components/ui/

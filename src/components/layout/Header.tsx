@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
@@ -53,11 +53,7 @@ const Header = ({ className }: HeaderProps) => {
             className="align-middle text-gray-500 hover:text-gray-800"
             onClick={() => setIsNarbarOpen(!isNarbarOpen)}
           >
-            {isNarbarOpen ? (
-              <AiOutlineClose className="h-5 w-5" />
-            ) : (
-              <AiOutlineMenu className="h-5 w-5" />
-            )}
+            {isNarbarOpen ? <AiOutlineClose className="h-5 w-5" /> : <AiOutlineMenu className="h-5 w-5" />}
           </button>
         </div>
 
@@ -81,14 +77,9 @@ const Header = ({ className }: HeaderProps) => {
           {status === "authenticated" ? (
             <>
               <div className="hidden md:block">
-                <NewPostModal
-                  open={openNewPostModal}
-                  setOpen={setOpenNewPostModal}
-                />
+                <NewPostModal open={openNewPostModal} setOpen={setOpenNewPostModal} />
               </div>
-              <UserInfoDropdownMenu
-                openNewPostModal={() => setOpenNewPostModal(true)}
-              />
+              <UserInfoDropdownMenu openNewPostModal={() => setOpenNewPostModal(true)} />
             </>
           ) : (
             <AuthModal />

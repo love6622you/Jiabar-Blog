@@ -2,14 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import PostEditorForm from "../form/PostEditorForm";
 import { cn } from "@/lib/utils";
 import PostView from "../post/PostReview";
@@ -48,7 +41,7 @@ const NewPostModal = ({ open, setOpen }: NewPostModal) => {
 
   const getPostReviewData = () => {
     const tempPostDataString = localStorage.getItem("tempPostData") ?? "";
-    let tempData = tempPostDataString && JSON.parse(tempPostDataString);
+    const tempData = tempPostDataString && JSON.parse(tempPostDataString);
     return tempData;
   };
 
@@ -88,12 +81,8 @@ const NewPostModal = ({ open, setOpen }: NewPostModal) => {
         </DialogHeader>
 
         <div className="mx-auto w-full max-w-[950px] flex-1 overflow-y-auto rounded-2xl bg-white px-8 py-5 md:px-16 md:py-10">
-          {state === ModalState.EDIT && (
-            <PostEditorForm onClose={handleClose} />
-          )}
-          {state === ModalState.PREVIEW && (
-            <PostView data={getPostReviewData()} />
-          )}
+          {state === ModalState.EDIT && <PostEditorForm onClose={handleClose} />}
+          {state === ModalState.PREVIEW && <PostView data={getPostReviewData()} />}
         </div>
       </DialogContent>
     </Dialog>

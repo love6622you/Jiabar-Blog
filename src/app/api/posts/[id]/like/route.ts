@@ -5,20 +5,24 @@ import { NextRequest, NextResponse } from "next/server";
 let result = null;
 
 export async function POST(req: NextRequest) {
-  const session = await checkSession();
-  if (session instanceof NextResponse) {
-    return session;
+  const sessionResponse = await checkSession();
+  if (sessionResponse instanceof NextResponse) {
+    return sessionResponse;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: sessionResponse?.email }
+  });
+
+  if (!user) {
+    return sessionResponse;
   }
 
   const { postId } = await req.json();
 
-  const user = await prisma.user.findUnique({
-    where: { email: session.email! }
-  });
-
   const heart = await prisma.heart.findFirst({
     where: {
-      userId: user?.id!,
+      userId: user?.id,
       postId: postId
     }
   });
@@ -28,7 +32,7 @@ export async function POST(req: NextRequest) {
       // 新增按讚
       await prisma.heart.create({
         data: {
-          userId: user?.id!,
+          userId: user.id,
           postId: postId
         }
       });

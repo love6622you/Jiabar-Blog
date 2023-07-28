@@ -29,18 +29,9 @@ export function convertFileToBase64(file: File) {
 }
 
 // 將 Base64 字串轉換回 File 物件
-export function convertBase64ToFile(
-  base64String: string,
-  fileName: string,
-  mimeType: string
-): File {
-  const base64WithoutPrefix = base64String.replace(
-    /^data:[a-z]+\/[a-z]+;base64,/,
-    ""
-  );
-  const bytes = Uint8Array.from(atob(base64WithoutPrefix), (char) =>
-    char.charCodeAt(0)
-  );
+export function convertBase64ToFile(base64String: string, fileName: string, mimeType: string): File {
+  const base64WithoutPrefix = base64String.replace(/^data:[a-z]+\/[a-z]+;base64,/, "");
+  const bytes = Uint8Array.from(atob(base64WithoutPrefix), (char) => char.charCodeAt(0));
   const blob = new Blob([bytes], { type: mimeType });
   return new File([blob], fileName, { type: mimeType });
 }

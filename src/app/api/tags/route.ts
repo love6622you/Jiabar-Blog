@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 let result = null;
 export async function GET(req: NextRequest) {
   try {
-    let tags = await prisma.tag
+    const tags = await prisma.tag
       .findMany({
         select: {
           name: true

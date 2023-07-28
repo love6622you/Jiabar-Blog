@@ -23,10 +23,9 @@ const Aside = ({ className }: AsideType) => {
         {Array.from({ length: 1 }, (_, index) => () => []).map((_, index) => {
           return (
             <p key={index}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem velit modi a aperiam quaerat illum deserunt? Et
-              cupiditate minima consequatur, corrupti odio ab illum iste totam?
-              Facere temporibus doloribus debitis?
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem velit modi a aperiam quaerat illum
+              deserunt? Et cupiditate minima consequatur, corrupti odio ab illum iste totam? Facere temporibus doloribus
+              debitis?
             </p>
           );
         })}

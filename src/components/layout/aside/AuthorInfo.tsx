@@ -16,7 +16,7 @@ const AuthorInfo = () => {
     if (/^\/post\/[^/]+$/.test(pathname)) {
       setIsPostPage(true);
     } else {
-      setPost({});
+      setPost(null);
       setIsPostPage(false);
     }
   }, [pathname]);
@@ -26,12 +26,7 @@ const AuthorInfo = () => {
       {post && post.author && (
         <>
           <div className="aspect-square w-full">
-            <Image
-              alt="avatar"
-              src={post.author.image}
-              width={400}
-              height={400}
-            />
+            <Image alt="avatar" src={post.author.image} width={400} height={400} />
           </div>
 
           <div className="py-2.5">

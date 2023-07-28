@@ -2,11 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import {
-  AiOutlineHome,
-  AiOutlineInfoCircle,
-  AiOutlineContacts
-} from "react-icons/ai";
+import { AiOutlineHome, AiOutlineInfoCircle } from "react-icons/ai";
 
 const navigation = [
   {
@@ -18,7 +14,7 @@ const navigation = [
     href: "/about",
     name: "About",
     icon: <AiOutlineInfoCircle className="h-6 w-6" />
-  },
+  }
   // {
   //   href: "/contact",
   //   name: "Contact",
@@ -41,9 +37,7 @@ const SideBar = ({ className }: SideBarType) => {
               href={item.href}
               className="group relative flex w-fit items-center justify-center rounded-full p-2 text-gray-500 hover:bg-purple-200"
             >
-              <div className="text-gray-500 group-hover:text-gray-100">
-                {item.icon}
-              </div>
+              <div className="text-gray-500 group-hover:text-gray-100">{item.icon}</div>
               <span className="absolute left-14 hidden whitespace-nowrap rounded-lg bg-purple-200 px-2.5 py-1.5 text-xs font-bold text-white group-hover:inline-block">
                 {item.name}
               </span>

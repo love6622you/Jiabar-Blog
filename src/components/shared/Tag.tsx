@@ -4,7 +4,7 @@ import React from "react";
 type TagType = {
   tagName: string;
   className?: string;
-  handleClick?: Function;
+  handleClick?: () => void;
   suffix?: React.ReactNode;
 };
 

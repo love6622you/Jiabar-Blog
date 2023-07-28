@@ -1,6 +1,5 @@
 "use client";
 
-import { LuLoader2 } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -8,20 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { CommentFormSchema } from "@/lib/validation-schema";
 import { MAX_INPUT_LIMIT } from "@/constant/Input";
 import request, { AxiosError } from "@/lib/request";
 import { toast } from "../ui/use-toast";
 import { cn } from "@/lib/utils";
-import SpinLoading from '../shared/SpinLoading';
+import SpinLoading from "../shared/SpinLoading";
 
 type CommentFormValues = z.infer<typeof CommentFormSchema>;
 
@@ -79,12 +72,7 @@ export function CommentForm() {
             <FormItem>
               <FormControl>
                 <>
-                  <Textarea
-                    placeholder="留下您的評論"
-                    className="resize-none"
-                    maxLength={MAX_INPUT_LIMIT}
-                    {...field}
-                  />
+                  <Textarea placeholder="留下您的評論" className="resize-none" maxLength={MAX_INPUT_LIMIT} {...field} />
                   <p className="text-right text-gray-700">
                     {currentLength}/{MAX_INPUT_LIMIT}
                   </p>
@@ -95,12 +83,7 @@ export function CommentForm() {
           )}
         />
         <div className="text-right">
-          <Button
-            type="submit"
-            variant={"outline"}
-            className={cn("px-6")}
-            disabled={isLoading}
-          >
+          <Button type="submit" variant={"outline"} className={cn("px-6")} disabled={isLoading}>
             {isLoading && <SpinLoading />}
             送出
           </Button>

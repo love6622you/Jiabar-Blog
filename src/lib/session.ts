@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { IResponse } from "@/types";
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
@@ -11,7 +12,7 @@ export async function getCurrentUserForServer() {
 export async function checkSession() {
   const session = await getCurrentUserForServer();
   if (!session) {
-    const result = {
+    const result: IResponse = {
       status: "fail",
       message: "Unauthorized. Please login"
     };

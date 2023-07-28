@@ -8,20 +8,14 @@ import Tag from "../shared/Tag";
 type InputTagsType = {
   name: string;
   tags: string[];
-  setValue: Function;
-  onChange: Function;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setValue: any;
+  onChange: () => void;
   limit: number;
   inputProps?: object;
 };
 
-const InputTags = ({
-  inputProps,
-  tags,
-  setValue,
-  name,
-  onChange,
-  limit
-}: InputTagsType) => {
+const InputTags = ({ inputProps, tags, setValue, name, onChange, limit }: InputTagsType) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +31,7 @@ const InputTags = ({
       event.preventDefault();
       if (inputValue) {
         // 根據 React-hook-form 的 setValue 響應更改值
-        tags?.includes(inputValue)
-          ? setValue(name, [...tags])
-          : setValue(name, [...tags, inputValue]);
+        tags?.includes(inputValue) ? setValue(name, [...tags]) : setValue(name, [...tags, inputValue]);
       }
       setInputValue("");
       onChange();
