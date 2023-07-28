@@ -1,6 +1,31 @@
 {
-  "extends": "next/core-web-vitals",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web-vitals"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
   "rules": {
-    "react-hooks/exhaustive-deps": "off"
-  }
+    "no-console": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-use-before-define": "error",
+    "no-unused-vars": "warn"
+  },
+  "plugins": ["react", "@typescript-eslint"]
 }
