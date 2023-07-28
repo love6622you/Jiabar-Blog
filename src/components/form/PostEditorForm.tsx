@@ -141,6 +141,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
                   )}
                   data-name={getValues().image?.name ?? "Upload image"}
                   type="file"
+                  accept=".jpeg, .jpg, .png, .webp"
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target && event.target.files) {
                       onChange(event.target.files[0]);
