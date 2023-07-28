@@ -71,6 +71,7 @@ export const PostEditorForm = ({ onClose }: PostEditorFormType) => {
       },
       onSuccess() {
         queryClient.invalidateQueries(["posts"]);
+        queryClient.invalidateQueries(["recommendedTags"]);
         toast({
           title: "Success"
         });

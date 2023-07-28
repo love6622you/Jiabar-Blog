@@ -20,7 +20,7 @@ const RecommendedTopic = () => {
 
   const { data: tags, isLoading } = useQuery({
     queryFn: () => getTags(),
-    queryKey: ["RecommendedTopic"]
+    queryKey: ["recommendedTags"]
   }) as { data: IResponse; isLoading: boolean };
 
   const handleClick = (searchText: string) => {
